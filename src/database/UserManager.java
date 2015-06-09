@@ -16,12 +16,13 @@ import java.util.HashMap;
 
 import javax.swing.JOptionPane;
 
+import server.User;
 import word.Word;
 import System.Sever;
 import System.UserInfo;
 
 public class UserManager {
-	private static ArrayList<UserInfo> onlineUser = new ArrayList<UserInfo>();
+	private static ArrayList<User> onlineUser = new ArrayList<User>();
 	
 	
 	public static boolean createUser(String account,String Pw){
@@ -64,14 +65,14 @@ public class UserManager {
 		return change;
 	}
 	
-	public static boolean createUser(UserInfo usrinfo){
+	public static boolean createUser(User usrinfo){
 		boolean change = false;
 		Connection conn = null;
 		try {
 			conn = DataBase.connect();
 			Statement statement = conn.createStatement();
 			String sql = "insert into USERTABLE(username,password,email,sex) values('"
-					+usrinfo.account+"','"+usrinfo.pw+"','"+usrinfo.email+"',"+(usrinfo.sex?"true":"false")+");";
+					+usrinfo.uid+"','"+usrinfo.pw+"','"+usrinfo.email+"',"+(usrinfo.sex?"true":"false")+");";
 			change = statement.execute(sql);
 			saveUserImage(usrinfo.account, usrinfo.image);
 		} catch (SQLException e) {

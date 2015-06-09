@@ -1,11 +1,14 @@
 package server;
 
+import inter.Message;
+
 import java.awt.image.BufferedImage;
 import java.io.Serializable;
 import java.sql.Date;
 import java.util.ArrayList;
 
 import javax.swing.Icon;
+
 import database.UserManager;
 //import net.Message.Message;
 //import System.UserInfo;
@@ -18,7 +21,8 @@ public class User implements Serializable{
 	protected String email;
 	//protected BufferedImage head;
 	protected ArrayList<User> onlineFriend;
-	protected boolean on = false;
+	protected ArrayList<User> friends;
+//	protected boolean on = false;
 	//protected boolean sex = true;
 	protected byte[] image = null;
 	protected Date date = null;		//date是上次上线时间
@@ -46,14 +50,14 @@ public class User implements Serializable{
 		uid = usr.uid;
 		pw = usr.pw;
 		onlineFriend = usr.onlineFriend;
-		on = usr.on;
+	//	on = usr.on;
 		//sex = usr.sex;
 		image = usr.image;
 		date = usr.date;		//date是上次上线时间
 		strdate = usr.strdate; 
 	}
 	
-	public boolean login(String ip,int port)
+	/*public boolean login(String ip,int port)
 	{
 		boolean success = false;
 		success = UserManager.identityVerify(uid, pw);
@@ -78,7 +82,7 @@ public class User implements Serializable{
 		System.out.println(success);
 		if(success)
 		{
-			UserInfo tmpUserInfo;
+			User tmpUserInfo;
 			ArrayList<UserInfo> uInfos = UserManager.getOnlineUser();
 			for(int i = 0; i < uInfos.size();i ++ )
 				if(uInfos.get(i).getAccount().equals(this.account))
@@ -86,18 +90,18 @@ public class User implements Serializable{
 		}
 		return success;
 	}
-	
+	*/
 	public boolean addFriend(String _account)
 	{
 		//A more complex Implement Needed!!!!!!!!!!!!!!!!!!!!!!!
 		boolean success,success1 = false,success2 = false;
-		success = UserManager.friendJudge(this.account, _account);
+		success = UserManager.friendJudge(this.uid, uid);
 		if(!success)
 		{			
 			System.out.println("OK1");
-			success1 = UserManager.addFriend(this.account, _account);
+			success1 = UserManager.addFriend(this.uid, _account);
 			System.out.println("OK2");
-			success2 = UserManager.addFriend(_account,this.account);
+			success2 = UserManager.addFriend(_account,this.uid);
 		}
 		return success1 & success2;
 	}
@@ -106,9 +110,9 @@ public class User implements Serializable{
 	{
 		//A more complex Implement Needed!!!!!!!!!!!!!!!!!!!!!!!
 		boolean success = false;
-		success = UserManager.friendJudge(this.account, _account);
+		success = UserManager.friendJudge(this.uid, _account);
 		if(success)
-			success = UserManager.delFriend(this.account, _account) && UserManager.delFriend(_account,this.account);
+			success = UserManager.delFriend(this.uid, _account) && UserManager.delFriend(_account,this.uid);
 		return success;
 	}
 	
@@ -116,20 +120,20 @@ public class User implements Serializable{
 	{
 		boolean success = false;
 		//success = UserManager.identityVerify(account, pw);
-		success = UserManager.friendJudge(account, _account);
+		success = UserManager.friendJudge(uid, _account);
 		return success;
 	}
 	
 	public boolean changePassword(String oldPw,String newPw){
 		boolean change = false;
-		change = UserManager.changePassword(account, oldPw, newPw);
+		change = UserManager.changePassword(uid, oldPw, newPw);
 		return change;
 	}
 	
-	public void updateFriendOnline()
+	/*public void updateFriendOnline()
 	{
 		onlineFriend.clear();
-		ArrayList<UserInfo> temp = UserManager.getOnlineUser();
+		ArrayList<User> temp = UserManager.getOnlineUser();
 		for(int i = 0;i < temp.size();i ++)
 		{
 			//System.out.println(temp.get(i).getAccount()+" "+ this.account +" "+ temp.get(i).isFriend(this.account));
@@ -140,46 +144,47 @@ public class User implements Serializable{
 				//temp.get(i).display();
 			}
 		}
-	}
+	}*/
 	
-	public ArrayList<UserInfo> getFriendOnline()
+	public ArrayList<User> getFriendOnline()
 	{
-		updateFriendOnline();
-		return new ArrayList<UserInfo>(onlineFriend);
+		//updateFriendOnline();
+		//return new ArrayList<UserInfo>(onlineFriend);
+		return new ArrayList<User>(this.onlineFriend);
 	}
 	
-	public Word SearchWord(String word)
+	/*public Word SearchWord(String word)
 	{
 		return new Word();
-	}
+	}*/
 	
 	public void display()
 	{
-		System.out.println("用户名:       "+account);
-		System.out.println("昵称:        "+nickname);
+		System.out.println("用户名:       "+uid);
+	//	System.out.println("昵称:        "+nickname);
 		System.out.println("密码:        "+pw);
-		System.out.println("在线:        "+on);
-		System.out.println("性别:        "+sex);
+	//	System.out.println("在线:        "+on);
+	//	System.out.println("性别:        "+sex);
 		System.out.println("上次登录:     "+date);
 	}
 	
-	public UserInfo UpdateUserInfo()
+	public User UpdateUserInfo()
 	{
 		
 		return null;	
 	}
 		
-	public String getNickname() {
+/*	public String getNickname() {
 		return nickname;
 	}
 	public void setNickname(String nickname) {
 		this.nickname = nickname;
+	}*/
+	public String getUid() {
+		return uid;
 	}
-	public String getAccount() {
-		return account;
-	}
-	public void setAccount(String account) {
-		this.account = account;
+	public void setUid(String uid) {
+		this.uid = uid;
 	}
 	public String getPw() {
 		return pw;
@@ -187,19 +192,19 @@ public class User implements Serializable{
 	public void setPw(String pw) {
 		this.pw = pw;
 	}
-	public boolean isOn() {
+	/*public boolean isOn() {
 		return on;
-	}
-	public void setOn(boolean on) {
+	}*/
+	/*public void setOn(boolean on) {
 		this.on = on;
-	}
-	public boolean isSex() {
+	}*/
+	/*public boolean isSex() {
 		return sex;
 	}
 	public void setSex(boolean sex) {
 		this.sex = sex;
 	}
-	
+	*/
 	public BufferedImage getImge(){
 		return Message.bytesToImage(image);
 	}

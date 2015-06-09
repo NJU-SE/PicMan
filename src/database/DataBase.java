@@ -11,11 +11,11 @@ public class DataBase {
     //jdbc驱动的位置
     private static String driver = "com.mysql.jdbc.Driver";
     //测试用数据库“myfirstdbexample”在网络上的位置
-    private static String url = "jdbc:mysql://localhost:3306/JavaProject"+
+    private static String url = "jdbc:mysql://localhost:3306/picman9"+
 		"?useUnicode=true&characterEncoding=utf8";
     //用户名和密码
-    private static String user = "root";
-    private static String password = "zhangruiyi";
+    private static String user = "picman9";
+    private static String password = "picman9";
     //连接句柄
     private static DataBaseConnectionPool dBPool = new DataBaseConnectionPool("Local", driver, url,
     		user, password, 1000);
