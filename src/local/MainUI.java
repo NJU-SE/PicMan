@@ -1,11 +1,6 @@
 package local;
 
 
-import FileNode;
-import FullFrame;
-import MainUI;
-import PFileSystemView;
-import ThreadImages;
 
 import java.awt.Color;
 import java.awt.event.ActionEvent;
@@ -41,20 +36,20 @@ import javax.swing.tree.TreePath;
 
 public class MainUI extends javax.swing.JFrame{
     ArrayList<File> ImageFiles = new ArrayList<File>();
-    ArrayList<JPanel> SmallPanels = new ArrayList<JPanel>();        //ÕâÀï¶¨ÒåN¸öÐ¡µÄÃæ°å£¬ÉÏÃæ´æ·Å±êÇ©£¬ÏÂÃæÓÃÓÚ´æ·ÅÎÄ¼þÃûµÄÎÄ±¾¿ò
-    ArrayList<JLabel> SmallLabels = new ArrayList<JLabel>();        //ÕâÀï¶¨ÒåN¸öÐ¡µÄ±êÇ©£¬ÓÃÀ´´æ·Å¶ÁÈ¡µÄÍ¼Æ¬
-    ArrayList<JTextField> SmallTextFields = new ArrayList<JTextField>();  //ÕâÀï¶¨ÒåN¸öÎÄ±¾¿ò£¬ÓÃÀ´ÏÔÊ¾ÓëÍ¼Æ¬Ïà¶ÔÓ¦µÄÎÄ¼þµÄÃû³Æ
-    JScrollPane BigScrollPane;             //ÕâÀï¶¨ÒåÒ»¸ö¹ö¶¯Ìõ£¬°Ñ´óµÄÃæ°å·ÅÔÚ¹ö¶¯ÌõÀï
-    ArrayList<File> ClickedFilePath = new ArrayList<File>();      //ÕâÀï¶¨ÒåÁËÒ»¸ö£¬Êó±êµã»÷µÄÎÄ¼þÂ·¾¶ÏÂµÄËùÓÐÎÄ¼þ
-    int ImagesQuantity;                                         //ÕâÀï¶¨ÒåµÄÊÇÍ¼Æ¬µÄ×ÜÊý
-    int SelectImage = -1;                                    //ÕâÀï¶¨ÒåµÄÊÇÑ¡ÔñµÄÍ¼Æ¬£¬0ÎªµÚÒ»ÕÅ£¬-1ÊÇÎ´Ñ¡Ôñ
-    JFrame IntroduceFrame = new JFrame();                        //°ïÖúÀïµÄ¹ØÓÚ½éÉÜÈí¼þ×÷Õß¶øµ¯³öµÄÃæ°å
-    JTextArea IntroduceTextArea = new JTextArea();                //Í¬ÉÏ£¬½éÉÜÈí¼þ×÷ÕßµÄÎÄ±¾Óò£¬±»¼ÓÔÚÁËÃæ°åÉÏ
-    JPopupMenu PopupMenu = new JPopupMenu();                      //ÓÒ¼üµ¥»÷ÎÄ¼þÊ±µ¯³öµÄµ¯³öÊ½²Ëµ¥
-    JMenuItem Copy = new JMenuItem(" ¸´ÖÆ ");                    // ²Ëµ¥ÖÐµÄ¸´ÖÆÑ¡Ïî
-    JMenuItem Delete = new JMenuItem(" É¾³ý ");              // ²Ëµ¥ÖÐµÄÉ¾³ýÑ¡Ïî
-    JMenuItem Cut = new JMenuItem(" ¼ôÇÐ ");                  //²Ëµ¥ÖÐµÄ¼ôÇÐÑ¡Ïî
-    JMenuItem Rename = new JMenuItem(" ÖØÃüÃû ");                  //²Ëµ¥ÖÐµÄÖØÃüÃûÑ¡Ïî
+    ArrayList<JPanel> SmallPanels = new ArrayList<JPanel>();        //ï¿½ï¿½ï¿½ï¶¨ï¿½ï¿½Nï¿½ï¿½Ð¡ï¿½ï¿½ï¿½ï¿½å£¬ï¿½ï¿½ï¿½ï¿½ï¿½Å±ï¿½Ç©ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ú´ï¿½ï¿½ï¿½Ä¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä±ï¿½ï¿½ï¿½
+    ArrayList<JLabel> SmallLabels = new ArrayList<JLabel>();        //ï¿½ï¿½ï¿½ï¶¨ï¿½ï¿½Nï¿½ï¿½Ð¡ï¿½Ä±ï¿½Ç©ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Å¶ï¿½È¡ï¿½ï¿½Í¼Æ¬
+    ArrayList<JTextField> SmallTextFields = new ArrayList<JTextField>();  //ï¿½ï¿½ï¿½ï¶¨ï¿½ï¿½Nï¿½ï¿½ï¿½Ä±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê¾ï¿½ï¿½Í¼Æ¬ï¿½ï¿½ï¿½Ó¦ï¿½ï¿½ï¿½Ä¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    JScrollPane BigScrollPane;             //ï¿½ï¿½ï¿½ï¶¨ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ñ´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ú¹ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    ArrayList<File> ClickedFilePath = new ArrayList<File>();      //ï¿½ï¿½ï¿½ï¶¨ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä¼ï¿½Â·ï¿½ï¿½ï¿½Âµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä¼ï¿½
+    int ImagesQuantity;                                         //ï¿½ï¿½ï¿½ï¶¨ï¿½ï¿½ï¿½ï¿½ï¿½Í¼Æ¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    int SelectImage = -1;                                    //ï¿½ï¿½ï¿½ï¶¨ï¿½ï¿½ï¿½ï¿½ï¿½Ñ¡ï¿½ï¿½ï¿½Í¼Æ¬ï¿½ï¿½0Îªï¿½ï¿½Ò»ï¿½Å£ï¿½-1ï¿½ï¿½Î´Ñ¡ï¿½ï¿½
+    JFrame IntroduceFrame = new JFrame();                        //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä¹ï¿½ï¿½Ú½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ß¶ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    JTextArea IntroduceTextArea = new JTextArea();                //Í¬ï¿½Ï£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ßµï¿½ï¿½Ä±ï¿½ï¿½ò£¬±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    JPopupMenu PopupMenu = new JPopupMenu();                      //ï¿½Ò¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä¼ï¿½Ê±ï¿½ï¿½ï¿½ï¿½ï¿½Äµï¿½ï¿½ï¿½Ê½ï¿½Ëµï¿½
+    JMenuItem Copy = new JMenuItem(" ï¿½ï¿½ï¿½ï¿½ ");                    // ï¿½Ëµï¿½ï¿½ÐµÄ¸ï¿½ï¿½ï¿½Ñ¡ï¿½ï¿½
+    JMenuItem Delete = new JMenuItem(" É¾ï¿½ï¿½ ");              // ï¿½Ëµï¿½ï¿½Ðµï¿½É¾ï¿½ï¿½Ñ¡ï¿½ï¿½
+    JMenuItem Cut = new JMenuItem(" ï¿½ï¿½ï¿½ï¿½ ");                  //ï¿½Ëµï¿½ï¿½ÐµÄ¼ï¿½ï¿½ï¿½Ñ¡ï¿½ï¿½
+    JMenuItem Rename = new JMenuItem(" ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ");                  //ï¿½Ëµï¿½ï¿½Ðµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ñ¡ï¿½ï¿½
     JPanel ImagePanel = new JPanel();
     String FilePath;
     MouseEvent E;
@@ -62,9 +57,9 @@ public class MainUI extends javax.swing.JFrame{
     ImageIcon TemporaryIcon;
     String OldName;
     JPopupMenu OutPopupMenu = new JPopupMenu();
-    JMenuItem Refresh = new JMenuItem("Ë¢ÐÂ");
-    JMenuItem Paste = new JMenuItem("Õ³Ìù");
-    JMenuItem BatchRename = new JMenuItem("ÅúÁ¿ÖØÃüÃû");
+    JMenuItem Refresh = new JMenuItem("Ë¢ï¿½ï¿½");
+    JMenuItem Paste = new JMenuItem("Õ³ï¿½ï¿½");
+    JMenuItem BatchRename = new JMenuItem("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½");
     ArrayList<BufferedInputStream> SourceFile = new ArrayList<BufferedInputStream>();
     ArrayList<FileOutputStream> NewFile = new ArrayList<FileOutputStream>();
     ArrayList<TreePath> TreePaths = new ArrayList<TreePath>();
@@ -75,35 +70,35 @@ public class MainUI extends javax.swing.JFrame{
     String CopyPath;
     int CutFlag = 0;
 
-    /** ´´½¨Ö÷½çÃæ*/
+    /** ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½*/
     public MainUI() {
         initComponents();
     }
     
-    /** ³õÊ¼»¯½éÉÜÃæ°å */
+    /** ï¿½ï¿½Ê¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ */
     public void InitIntroduction(){
         IntroduceFrame.setVisible(false);
-        IntroduceFrame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);//µã²æµÄÊ±ºòÖ»ÊÇÒþ²ØÃæ°å
+        IntroduceFrame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);//ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½Ö»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         IntroduceFrame.setSize(220, 130);
-        IntroduceFrame.setLocationRelativeTo(null);      //µ¯³öÃæ°åÊ±ÔÚÆÁÄ»µÄÖÐÑë
+        IntroduceFrame.setLocationRelativeTo(null);      //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½ï¿½ï¿½Ä»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         IntroduceFrame.add(IntroduceTextArea);
-        IntroduceTextArea.setEditable(false);            //ÎÄ±¾ÉèÎª²»¿É±à¼­
+        IntroduceTextArea.setEditable(false);            //ï¿½Ä±ï¿½ï¿½ï¿½Îªï¿½ï¿½ï¿½É±à¼­
     	
     }
     
-    /** ³õÊ¼»¯Êý¾Ý(Ãæ°åÉÏÄÚÈÝµÈ)*/
+    /** ï¿½ï¿½Ê¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½(ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ýµï¿½)*/
     public void Init() {
 
 
         InitIntroduction();
-        BigScrollPane = new JScrollPane(ImagePanel);         //¹ö¶¯Ãæ°åÀï¼ÓÉÏÏÔÊ¾ÓÃÓÚÏÔÊ¾Í¼ÏñµÄ´óÃæ°å
-        ImagePanel.setLayout(null);                             //Í¼ÏñÃæ°åµÄ²¼¾ÖÉèÎªnull£¨Õâµã·Ç³£ÖØÒª£©
-        jTabbedPane1.add(BigScrollPane);                    //ÔÚ±êÇ©»¯´°¿ÚÖÐ¼ÓÈëÒÑÓÐÍ¼ÏñÃæ°åµÄ¹ö¶¯Ãæ°å
-        PopupMenu.add(Copy);                                 //µ¯³öÊ½´°¿ÚÖÐ¼ÓÈë¸´ÖÆ²Ëµ¥Ïî
-        //jPopupMenu.addSeparator();                         // Íù²Ëµ¥ÖÐ¼ÓºáÏß
-        PopupMenu.add(Cut);                                 //µ¯³öÊ½´°¿ÚÖÐ¼ÓÈë¼ôÇÐ²Ëµ¥Ïî
-        PopupMenu.add(Delete);                             //µ¯³öÊ½´°¿ÚÖÐ¼ÓÈëÉ¾³ý²Ëµ¥Ïî
-        PopupMenu.add(Rename);                              //µ¯³öÊ½´°¿ÚÖÐ¼ÓÈëÖØÃüÃû²Ëµ¥Ïî
+        BigScrollPane = new JScrollPane(ImagePanel);         //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê¾ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê¾Í¼ï¿½ï¿½Ä´ï¿½ï¿½ï¿½ï¿½
+        ImagePanel.setLayout(null);                             //Í¼ï¿½ï¿½ï¿½ï¿½ï¿½Ä²ï¿½ï¿½ï¿½ï¿½ï¿½Îªnullï¿½ï¿½ï¿½ï¿½ï¿½Ç³ï¿½ï¿½ï¿½Òªï¿½ï¿½
+        jTabbedPane1.add(BigScrollPane);                    //ï¿½Ú±ï¿½Ç©ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í¼ï¿½ï¿½ï¿½ï¿½ï¿½Ä¹ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+        PopupMenu.add(Copy);                                 //ï¿½ï¿½ï¿½ï¿½Ê½ï¿½ï¿½ï¿½ï¿½ï¿½Ð¼ï¿½ï¿½ë¸´ï¿½Æ²Ëµï¿½ï¿½ï¿½
+        //jPopupMenu.addSeparator();                         // ï¿½ï¿½ï¿½Ëµï¿½ï¿½Ð¼Óºï¿½ï¿½ï¿½
+        PopupMenu.add(Cut);                                 //ï¿½ï¿½ï¿½ï¿½Ê½ï¿½ï¿½ï¿½ï¿½ï¿½Ð¼ï¿½ï¿½ï¿½ï¿½ï¿½Ð²Ëµï¿½ï¿½ï¿½
+        PopupMenu.add(Delete);                             //ï¿½ï¿½ï¿½ï¿½Ê½ï¿½ï¿½ï¿½ï¿½ï¿½Ð¼ï¿½ï¿½ï¿½É¾ï¿½ï¿½ï¿½Ëµï¿½ï¿½ï¿½
+        PopupMenu.add(Rename);                              //ï¿½ï¿½ï¿½ï¿½Ê½ï¿½ï¿½ï¿½ï¿½ï¿½Ð¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ëµï¿½ï¿½ï¿½
         OutPopupMenu.add(Refresh);
         OutPopupMenu.add(Paste);
         OutPopupMenu.add(BatchRename);
@@ -118,7 +113,7 @@ public class MainUI extends javax.swing.JFrame{
             }
 
             public void popupMenuCanceled(PopupMenuEvent e) {
-                System.out.println("ÎÒÊÇ3");
+                System.out.println("ï¿½ï¿½ï¿½ï¿½3");
             }
         });
 
@@ -194,7 +189,7 @@ public class MainUI extends javax.swing.JFrame{
     
     }
     
-    /** Â·¾¶»ØÍË*/
+    /** Â·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½*/
     public void Back() {
 
         jTree1.setSelectionPath(TreePaths.get(jComboBox1.getSelectedIndex() - 1));
@@ -203,7 +198,7 @@ public class MainUI extends javax.swing.JFrame{
     
     }
     
-    /** Â·¾¶Ç°½ø*/
+    /** Â·ï¿½ï¿½Ç°ï¿½ï¿½*/
     public void Next() {
 
         jTree1.setSelectionPath(TreePaths.get(jComboBox1.getSelectedIndex() + 1));
@@ -247,7 +242,7 @@ public class MainUI extends javax.swing.JFrame{
             }
         }
 
-        String string = JOptionPane.showInputDialog(null, "ÇëÊäÈëÐÂµÄÃû×Ö(²»°üº¬ºó×º)", "ÅúÁ¿ÖØÃüÃû", JOptionPane.INFORMATION_MESSAGE);
+        String string = JOptionPane.showInputDialog(null, "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Âµï¿½ï¿½ï¿½ï¿½ï¿½(ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½×º)", "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½", JOptionPane.INFORMATION_MESSAGE);
 
         for (int i = 0; i < filesA.size(); i++) {
             String axt = filesA.get(i).getName().substring(
@@ -275,7 +270,7 @@ public class MainUI extends javax.swing.JFrame{
     }
     
     /** */
-    //TODO: ½«throw ¸ü¸ÄÎª try catch
+    //TODO: ï¿½ï¿½throw ï¿½ï¿½ï¿½ï¿½Îª try catch
     public void Paste() throws FileNotFoundException {
 
         int flag = 0;
@@ -291,12 +286,12 @@ public class MainUI extends javax.swing.JFrame{
             }
             if (FlagName == 1) {
                 JOptionPane.showMessageDialog(null,
-                        "±¾Ä¿Â¼ÏÂ´æÔÚÏàÍ¬Ãû×ÖµÄÎÄ¼þ£¬²»ÄÜ½øÐÐÕ³Ìù²Ù×÷!!!",
+                        "ï¿½ï¿½Ä¿Â¼ï¿½Â´ï¿½ï¿½ï¿½ï¿½ï¿½Í¬ï¿½ï¿½ï¿½Öµï¿½ï¿½Ä¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ü½ï¿½ï¿½ï¿½Õ³ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½!!!",
                         "ERROR", JOptionPane.INFORMATION_MESSAGE);
             } else {
                 if (CopyPath == FilePath) {
                     JOptionPane.showMessageDialog(null,
-                            "ÎÞ·¨ÔÚÍ¬Ò»Ä¿Â¼½øÐÐ¼ôÇÐºÍÕ³Ìù²Ù×÷!!!",
+                            "ï¿½Þ·ï¿½ï¿½ï¿½Í¬Ò»Ä¿Â¼ï¿½ï¿½ï¿½Ð¼ï¿½ï¿½Ðºï¿½Õ³ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½!!!",
                             "ERROR", JOptionPane.INFORMATION_MESSAGE);
                 } else {
                     NewFile.add(new FileOutputStream(new File(FilePath + File.separator + SourceFileName)));
@@ -320,8 +315,8 @@ public class MainUI extends javax.swing.JFrame{
                     double h1 = ic1.getIconHeight();
                     double w1 = ic1.getIconWidth();
                     if (h1 < 77 && w1 < 100) {
-                        Image im = ic1.getImage().getScaledInstance((int) w1, (int) h1, Image.SCALE_DEFAULT);//¸Ä±ä´óÐ¡
-                        ImageIcon ic2 = new ImageIcon(im);//´ÓÐÂµÃµ½Ò»¸ö¹Ì¶¨Í¼Æ¬
+                        Image im = ic1.getImage().getScaledInstance((int) w1, (int) h1, Image.SCALE_DEFAULT);//ï¿½Ä±ï¿½ï¿½Ð¡
+                        ImageIcon ic2 = new ImageIcon(im);//ï¿½ï¿½ï¿½ÂµÃµï¿½Ò»ï¿½ï¿½ï¿½Ì¶ï¿½Í¼Æ¬
                         SmallLabels.add(new JLabel());
                         SmallTextFields.add(new JTextField());
                         SmallLabels.get(SmallLabels.size() - 1).setIcon(ic2);
@@ -329,14 +324,14 @@ public class MainUI extends javax.swing.JFrame{
 
                     } else {
                         if (h1 * 180 > w1 * 142) {
-                            Image im = ic1.getImage().getScaledInstance((int) (w1 / (h1 / 81)), 81, Image.SCALE_DEFAULT);//¸Ä±ä´óÐ¡
+                            Image im = ic1.getImage().getScaledInstance((int) (w1 / (h1 / 81)), 81, Image.SCALE_DEFAULT);//ï¿½Ä±ï¿½ï¿½Ð¡
                             ImageIcon ic2 = new ImageIcon(im);
                             SmallLabels.add(new JLabel());
                             SmallTextFields.add(new JTextField());
                             SmallLabels.get(SmallLabels.size() - 1).setIcon(ic2);
                             SmallTextFields.get(SmallLabels.size() - 1).setText(SourceFileName);
                         } else {
-                            Image im = ic1.getImage().getScaledInstance(105, (int) (h1 / (w1 / 105)), Image.SCALE_DEFAULT);//¸Ä±ä´óÐ¡
+                            Image im = ic1.getImage().getScaledInstance(105, (int) (h1 / (w1 / 105)), Image.SCALE_DEFAULT);//ï¿½Ä±ï¿½ï¿½Ð¡
                             ImageIcon ic2 = new ImageIcon(im);
                             SmallLabels.add(new JLabel());
                             SmallTextFields.add(new JTextField());
@@ -369,11 +364,11 @@ public class MainUI extends javax.swing.JFrame{
                         SmallLabels.get(j).setBackground(new java.awt.Color(244, 244, 244));
                         if (new File(CopyPath + File.separator + SourceFileName).delete()) {
                             JOptionPane.showMessageDialog(null,
-                                    "¼ôÇÐ²Ù×÷ÒÑ³É¹¦Íê³É!!!",
+                                    "ï¿½ï¿½ï¿½Ð²ï¿½ï¿½ï¿½ï¿½Ñ³É¹ï¿½ï¿½ï¿½ï¿½!!!",
                                     "ERROR", JOptionPane.INFORMATION_MESSAGE);
                         } else {
                             JOptionPane.showMessageDialog(null,
-                                    "Ô´ÎÄ¼þÕý±»ÁíÒ»¸ö³ÌÐòÊ¹ÓÃÖÐ£¬²»ÄÜ±»É¾³ý!!!",
+                                    "Ô´ï¿½Ä¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê¹ï¿½ï¿½ï¿½Ð£ï¿½ï¿½ï¿½ï¿½Ü±ï¿½É¾ï¿½ï¿½!!!",
                                     "ERROR", JOptionPane.INFORMATION_MESSAGE);
                         }
                     }
@@ -445,7 +440,7 @@ public class MainUI extends javax.swing.JFrame{
     
     }
     
-    /** ¸´ÖÆ2*/
+    /** ï¿½ï¿½ï¿½ï¿½2*/
     public void CopyTwo() throws IOException {
         if (CopyNum != 0) {
             try {
@@ -467,7 +462,7 @@ public class MainUI extends javax.swing.JFrame{
     
     }
     
-    /** ¸´ÖÆ*/
+    /** ï¿½ï¿½ï¿½ï¿½*/
     public void Copy() throws IOException {
         CutFlag = 0;
         if (CopyNum != 0) {
@@ -491,7 +486,7 @@ public class MainUI extends javax.swing.JFrame{
     
     }
     
-    /** ¼ôÇÐ*/
+    /** ï¿½ï¿½ï¿½ï¿½*/
     public void Cut() throws IOException {
         if (CopyNum != 0) {
             try {
@@ -512,17 +507,17 @@ public class MainUI extends javax.swing.JFrame{
     
     }
     
-    /** ÓÒ¼üµã»÷µÄÊÂ¼þ*/
+    /** ï¿½Ò¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Â¼ï¿½*/
     public void OutPopupMenu(MouseEvent evt) {
-        if (evt.isPopupTrigger()) {                          //ÅÐ¶ÏÊó±êµÄµã»÷ÊÇ·ñÎªÓÒ¼üµÄµã»÷
-            OutPopupMenu.show(evt.getComponent(), evt.getX(), evt.getY());         //µ¯³öÊ½²Ëµ¥ÔÚ´ËÊ±µ¯³ö£¬²¢ÉèÖÃºÃÁËÆäµ¯³öµÄÎ»ÖÃ
+        if (evt.isPopupTrigger()) {                          //ï¿½Ð¶ï¿½ï¿½ï¿½ï¿½Äµï¿½ï¿½ï¿½Ç·ï¿½Îªï¿½Ò¼ï¿½ï¿½Äµï¿½ï¿½
+            OutPopupMenu.show(evt.getComponent(), evt.getX(), evt.getY());         //ï¿½ï¿½ï¿½ï¿½Ê½ï¿½Ëµï¿½ï¿½Ú´ï¿½Ê±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ãºï¿½ï¿½ï¿½ï¿½äµ¯ï¿½ï¿½ï¿½ï¿½Î»ï¿½ï¿½
         }
     }
 
-    /** É¾³ý*/
+    /** É¾ï¿½ï¿½*/
     public void Delete() {
         SmallLabels.get(SelectImage).setIcon(null);
-        if (JOptionPane.showConfirmDialog(null, "ÄãÈ·¶¨ÒªÉ¾³ý" + SmallTextFields.get(SelectImage).getText() + "Âð?") == JOptionPane.YES_OPTION) {
+        if (JOptionPane.showConfirmDialog(null, "ï¿½ï¿½È·ï¿½ï¿½ÒªÉ¾ï¿½ï¿½" + SmallTextFields.get(SelectImage).getText() + "ï¿½ï¿½?") == JOptionPane.YES_OPTION) {
             if (new File(FilePath + File.separator + SmallTextFields.get(SelectImage).getText()).delete()) {
                 if (ImagesQuantity - 1 > 20) {
                     SmallPanels.get(SelectImage).setBounds(3000, 1, 0, 0);
@@ -552,7 +547,7 @@ public class MainUI extends javax.swing.JFrame{
                 ImagesQuantity--;
             } else {
                 JOptionPane.showMessageDialog(null,
-                        "ÎÄ¼þÕý±»ÁíÒ»¸ö³ÌÐòÊ¹ÓÃÖÐ£¬ÎÞ·¨½øÐÐÉ¾³ý²Ù×÷!!!",
+                        "ï¿½Ä¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê¹ï¿½ï¿½ï¿½Ð£ï¿½ï¿½Þ·ï¿½ï¿½ï¿½ï¿½ï¿½É¾ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½!!!",
                         "ERROR", JOptionPane.INFORMATION_MESSAGE);
             }
         }
@@ -560,7 +555,7 @@ public class MainUI extends javax.swing.JFrame{
     
     }
     
-    /** ÖØÃüÃû*/
+    /** ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½*/
     public void Rename() {
         Robot mRobot = null;
         try {
@@ -571,7 +566,7 @@ public class MainUI extends javax.swing.JFrame{
         TemporaryFile = new File(FilePath + File.separator + SmallTextFields.get(SelectImage).getText());
         Point point = new Point();
         point = SmallTextFields.get(SelectImage).getLocationOnScreen();
-        mRobot.mouseMove(point.x + 50, point.y + 5);//Êó±êÒÆ¶¯
+        mRobot.mouseMove(point.x + 50, point.y + 5);//ï¿½ï¿½ï¿½ï¿½Æ¶ï¿½
         SmallTextFields.get(SelectImage).setEditable(true);
         OldName = (String) SmallTextFields.get(SelectImage).getText();
         SmallTextFields.get(SelectImage).setBackground(Color.white);
@@ -593,7 +588,7 @@ public class MainUI extends javax.swing.JFrame{
     
     }
     
-    /** ÖØÃüÃûÖÐ¡£¡£¡£¶ÔÎÄ×ÖÐÞ¸Ä*/
+    /** ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Þ¸ï¿½*/
     public void RenameText() throws IOException {
         File filetwo = new File(FilePath + File.separator + SmallTextFields.get(SelectImage).getText());
 
@@ -614,11 +609,11 @@ public class MainUI extends javax.swing.JFrame{
         ShowImages(E, new TreePath(0), 0);}*/
         if (TemporaryFile.renameTo(filetwo)) {
             JOptionPane.showMessageDialog(null,
-                    "ÖØÃüÃû²Ù×÷³É¹¦!!!",
-                    "ÖØÃüÃû", JOptionPane.INFORMATION_MESSAGE);
+                    "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½É¹ï¿½!!!",
+                    "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½", JOptionPane.INFORMATION_MESSAGE);
 
         } else {
-            JOptionPane.showMessageDialog(null, "ÎÄ¼þ±»ÆäËû³ÌÐòÕ¼ÓÃ£¬ÖØÃüÃû²Ù×÷Ê§°Ü", "ÖØÃüÃû", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null, "ï¿½Ä¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Õ¼ï¿½Ã£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê§ï¿½ï¿½", "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½", JOptionPane.INFORMATION_MESSAGE);
 
         }
         SmallTextFields.get(SelectImage).setBackground(null);
@@ -629,25 +624,25 @@ public class MainUI extends javax.swing.JFrame{
     
     }
     
-    /** »ñÈ¡Ò»¸öÍ¼±ê(ËõÂÔÍ¼)*/
+    /** ï¿½ï¿½È¡Ò»ï¿½ï¿½Í¼ï¿½ï¿½(ï¿½ï¿½ï¿½ï¿½Í¼)*/
     public ImageIcon GetImageIcon(ImageIcon imageicon) {
         //File filetwo = new File(FilePath + File.separator + SmallTextFields.get(SelectImage).getText());
         //ImageIcon imageicon = new ImageIcon(filetwo.getAbsolutePath());
         double h1 = imageicon.getIconHeight();
         double w1 = imageicon.getIconWidth();
         if (h1 < 77 && w1 < 100) {
-            Image image = imageicon.getImage().getScaledInstance((int) w1, (int) h1, Image.SCALE_DEFAULT);//¸Ä±ä´óÐ¡
-            ImageIcon Finalii = new ImageIcon(image);//´ÓÐÂµÃµ½Ò»¸ö¹Ì¶¨Í¼Æ¬
+            Image image = imageicon.getImage().getScaledInstance((int) w1, (int) h1, Image.SCALE_DEFAULT);//ï¿½Ä±ï¿½ï¿½Ð¡
+            ImageIcon Finalii = new ImageIcon(image);//ï¿½ï¿½ï¿½ÂµÃµï¿½Ò»ï¿½ï¿½ï¿½Ì¶ï¿½Í¼Æ¬
             return Finalii;
 
         } else {
             if (h1 * 180 > w1 * 142) {
-                Image image = imageicon.getImage().getScaledInstance((int) (w1 / (h1 / 81)), 81, Image.SCALE_DEFAULT);//¸Ä±ä´óÐ¡
-                ImageIcon Finalii = new ImageIcon(image);//´ÓÐÂµÃµ½Ò»¸ö¹Ì¶¨Í¼Æ¬
+                Image image = imageicon.getImage().getScaledInstance((int) (w1 / (h1 / 81)), 81, Image.SCALE_DEFAULT);//ï¿½Ä±ï¿½ï¿½Ð¡
+                ImageIcon Finalii = new ImageIcon(image);//ï¿½ï¿½ï¿½ÂµÃµï¿½Ò»ï¿½ï¿½ï¿½Ì¶ï¿½Í¼Æ¬
                 return Finalii;
             } else {
-                Image image = imageicon.getImage().getScaledInstance(105, (int) (h1 / (w1 / 105)), Image.SCALE_DEFAULT);//¸Ä±ä´óÐ¡
-                ImageIcon Finalii = new ImageIcon(image);//´ÓÐÂµÃµ½Ò»¸ö¹Ì¶¨Í¼Æ¬
+                Image image = imageicon.getImage().getScaledInstance(105, (int) (h1 / (w1 / 105)), Image.SCALE_DEFAULT);//ï¿½Ä±ï¿½ï¿½Ð¡
+                ImageIcon Finalii = new ImageIcon(image);//ï¿½ï¿½ï¿½ÂµÃµï¿½Ò»ï¿½ï¿½ï¿½Ì¶ï¿½Í¼Æ¬
                 return Finalii;
             }
         }
@@ -657,10 +652,10 @@ public class MainUI extends javax.swing.JFrame{
     
     /** Menu*/
     public void PopupMenu(MouseEvent evt) {
-        if (evt.isPopupTrigger()) {                          //ÅÐ¶ÏÊó±êµÄµã»÷ÊÇ·ñÎªÓÒ¼üµÄµã»÷
-            JLabel SelectLabel = new JLabel();                     //¶¨ÒåÒ»¸öÁÙÊ±µÄ±êÇ©
-            SelectLabel = (JLabel) evt.getSource();                 //ÈÃËüµÈÓÚËùµã»÷µÄ±êÇ©
-            PopupMenu.show(evt.getComponent(), evt.getX(), evt.getY());         //µ¯³öÊ½²Ëµ¥ÔÚ´ËÊ±µ¯³ö£¬²¢ÉèÖÃºÃÁËÆäµ¯³öµÄÎ»ÖÃ
+        if (evt.isPopupTrigger()) {                          //ï¿½Ð¶ï¿½ï¿½ï¿½ï¿½Äµï¿½ï¿½ï¿½Ç·ï¿½Îªï¿½Ò¼ï¿½ï¿½Äµï¿½ï¿½
+            JLabel SelectLabel = new JLabel();                     //ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½Ê±ï¿½Ä±ï¿½Ç©
+            SelectLabel = (JLabel) evt.getSource();                 //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä±ï¿½Ç©
+            PopupMenu.show(evt.getComponent(), evt.getX(), evt.getY());         //ï¿½ï¿½ï¿½ï¿½Ê½ï¿½Ëµï¿½ï¿½Ú´ï¿½Ê±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ãºï¿½ï¿½ï¿½ï¿½äµ¯ï¿½ï¿½ï¿½ï¿½Î»ï¿½ï¿½
 
             for (int b = 0; b < SmallLabels.size(); b++) {
                 SmallLabels.get(b).setBackground(new java.awt.Color(244, 244, 244));
@@ -678,7 +673,7 @@ public class MainUI extends javax.swing.JFrame{
     
     }
     
-    /** ±êÇ©ÉÏµÄÊÂ¼þ¼àÌý*/
+    /** ï¿½ï¿½Ç©ï¿½Ïµï¿½ï¿½Â¼ï¿½ï¿½ï¿½ï¿½ï¿½*/
     public void InitLabelListener() {
         for (int i = 0; i < SmallLabels.size(); i++) {
             SmallLabels.get(i).setBorder(null);
@@ -708,7 +703,7 @@ public class MainUI extends javax.swing.JFrame{
                         for (int t = 0; t < ClickedFilePath.size(); t++) {
 
                             if (ClickedFilePath.get(t).getName().equals(SmallTextFields.get(SelectImage).getText())) {
-                                System.out.println("µã»÷µÄÍ¼Æ¬" + ClickedFilePath.get(t).getAbsolutePath());
+                                System.out.println("ï¿½ï¿½ï¿½ï¿½ï¿½Í¼Æ¬" + ClickedFilePath.get(t).getAbsolutePath());
                                 ImageIcon TemporaryIcon = new ImageIcon(ClickedFilePath.get(t).getAbsolutePath());
                                 Image TemporaryImage = TemporaryIcon.getImage().getScaledInstance(TemporaryIcon.getIconWidth(), TemporaryIcon.getIconHeight(), Image.SCALE_DEFAULT);
                                 ic2 = new ImageIcon(TemporaryImage);
@@ -726,7 +721,7 @@ public class MainUI extends javax.swing.JFrame{
     
     }
     
-    /** ´ò¿ªº¯Êý..(Ë«»÷´ò¿ª)*/
+    /** ï¿½ò¿ªºï¿½ï¿½ï¿½..(Ë«ï¿½ï¿½ï¿½ï¿½)*/
     public void Open() {
         JFileChooser chooser = new JFileChooser();
         FileNameExtensionFilter filter = new FileNameExtensionFilter(
@@ -788,8 +783,8 @@ public class MainUI extends javax.swing.JFrame{
 
             Locale systime = Locale.CHINA;
             SimpleDateFormat timeformat = new SimpleDateFormat("yyyy-MM-dd   HH:mm:ss", systime);
-            String temptime = timeformat.format(new Date());//ÇóµÃ±¾µØ»úµÄÏµÍ³Ê±¼ä;
-            System.out.println("¿ªÊ¼µÄÊ±¼äÎª:" + temptime);
+            String temptime = timeformat.format(new Date());//ï¿½ï¿½Ã±ï¿½ï¿½Ø»ï¿½ï¿½ï¿½ÏµÍ³Ê±ï¿½ï¿½;
+            System.out.println("ï¿½ï¿½Ê¼ï¿½ï¿½Ê±ï¿½ï¿½Îª:" + temptime);
             SmallPanels.clear();
             SmallLabels.clear();
             SmallTextFields.clear();
@@ -883,10 +878,10 @@ public class MainUI extends javax.swing.JFrame{
             Thread.sleep(500);
             }
             } catch (InterruptedException ex) {
-            Logger.getLogger(Ö÷½çÃæ.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½.class.getName()).log(Level.SEVERE, null, ex);
             }*/
             ImagesQuantity = ImageFiles.size();
-            System.out.println("Í¼Æ¬×ÜÊýÎª:" + ImagesQuantity);
+            System.out.println("Í¼Æ¬ï¿½ï¿½ï¿½ï¿½Îª:" + ImagesQuantity);
             InitLabelListener();
 
             if (ImagesQuantity > 20) {
@@ -911,7 +906,7 @@ public class MainUI extends javax.swing.JFrame{
     }
     
     
-    /** ¶ÔÃ¿¸ö×é¼þ½øÐÐ³õÊ¼»¯*/
+    /** ï¿½ï¿½Ã¿ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð³ï¿½Ê¼ï¿½ï¿½*/
     private void initComponents() {
 
         jToolBar1 = new javax.swing.JToolBar();
@@ -939,7 +934,7 @@ public class MainUI extends javax.swing.JFrame{
         jToolBar1.setRollover(true);
 
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Picture/back.jpg"))); // NOI18N
-        jButton1.setText("ºóÍË");
+        jButton1.setText("ï¿½ï¿½ï¿½ï¿½");
         jButton1.setFocusable(false);
         jButton1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButton1.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
@@ -951,7 +946,7 @@ public class MainUI extends javax.swing.JFrame{
         jToolBar1.add(jButton1);
 
         jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Picture/forword.jpg"))); // NOI18N
-        jButton2.setText("Ç°½ø");
+        jButton2.setText("Ç°ï¿½ï¿½");
         jButton2.setFocusable(false);
         jButton2.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButton2.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
@@ -963,7 +958,7 @@ public class MainUI extends javax.swing.JFrame{
         jToolBar1.add(jButton2);
 
         jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Picture/up.jpg"))); // NOI18N
-        jButton3.setText("ÏòÉÏ");
+        jButton3.setText("ï¿½ï¿½ï¿½ï¿½");
         jButton3.setFocusable(false);
         jButton3.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButton3.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
@@ -975,7 +970,7 @@ public class MainUI extends javax.swing.JFrame{
         jToolBar1.add(jButton3);
 
         jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Picture/refresh.jpg"))); // NOI18N
-        jButton4.setText("Ë¢ÐÂ");
+        jButton4.setText("Ë¢ï¿½ï¿½");
         jButton4.setFocusable(false);
         jButton4.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButton4.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
@@ -987,7 +982,7 @@ public class MainUI extends javax.swing.JFrame{
         jToolBar1.add(jButton4);
 
         jButton5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Picture/delete.jpg"))); // NOI18N
-        jButton5.setText("É¾³ý");
+        jButton5.setText("É¾ï¿½ï¿½");
         jButton5.setFocusable(false);
         jButton5.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButton5.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
@@ -1003,13 +998,13 @@ public class MainUI extends javax.swing.JFrame{
 
         jComboBox1.setPreferredSize(new java.awt.Dimension(62, 14));
 
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "ÇëÑ¡ÔñÎÄ¼þ¼ÐÍâ¹Û", " ", " ", " " }));
+        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "ï¿½ï¿½Ñ¡ï¿½ï¿½ï¿½Ä¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½", " ", " ", " " }));
 
         jMenuBar1.setMaximumSize(new java.awt.Dimension(1000, 32769));
 
-        jMenu1.setText("ÎÄ¼þ");
+        jMenu1.setText("ï¿½Ä¼ï¿½");
 
-        jMenuItem1.setText("´ò¿ª");
+        jMenuItem1.setText("ï¿½ï¿½");
         jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem1ActionPerformed(evt);
@@ -1017,7 +1012,7 @@ public class MainUI extends javax.swing.JFrame{
         });
         jMenu1.add(jMenuItem1);
 
-        jMenuItem2.setText("ÍË³ö");
+        jMenuItem2.setText("ï¿½Ë³ï¿½");
         jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem2ActionPerformed(evt);
@@ -1027,16 +1022,16 @@ public class MainUI extends javax.swing.JFrame{
 
         jMenuBar1.add(jMenu1);
 
-        jMenu2.setText("¹¤¾ß");
+        jMenu2.setText("ï¿½ï¿½ï¿½ï¿½");
 
-        jMenuItem3.setText("ÅúÁ¿¸ÄÃû");
+        jMenuItem3.setText("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½");
         jMenu2.add(jMenuItem3);
 
         jMenuBar1.add(jMenu2);
 
-        jMenu3.setText("°ïÖú");
+        jMenu3.setText("ï¿½ï¿½ï¿½ï¿½");
 
-        jMenuItem4.setText("¹ØÓÚ");
+        jMenuItem4.setText("ï¿½ï¿½ï¿½ï¿½");
         jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem4ActionPerformed(evt);
@@ -1092,7 +1087,7 @@ public class MainUI extends javax.swing.JFrame{
     }
     private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
         IntroduceFrame.setVisible(true);
-        IntroduceTextArea.setText("\n      ÖÆ×÷ÈË:µÚ¾Å×é\n" );
+        IntroduceTextArea.setText("\n      ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½:ï¿½Ú¾ï¿½ï¿½ï¿½\n" );
     }//GEN-LAST:event_jMenuItem4ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -1122,9 +1117,9 @@ public class MainUI extends javax.swing.JFrame{
 
     public static void main(String args[]) {
         try {
-            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());//³¢ÊÔÊ¹ÓÃÏµÍ³Íâ¹Û
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());//ï¿½ï¿½ï¿½ï¿½Ê¹ï¿½ï¿½ÏµÍ³ï¿½ï¿½ï¿½
         } catch (Exception e) {
-            System.err.println("²»ÄÜÊ¹ÓÃÏµÍ³Íâ¹Û");
+            System.err.println("ï¿½ï¿½ï¿½ï¿½Ê¹ï¿½ï¿½ÏµÍ³ï¿½ï¿½ï¿½");
         }
 
         java.awt.EventQueue.invokeLater(new Runnable() {
