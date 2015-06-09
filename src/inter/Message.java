@@ -9,9 +9,11 @@ import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Map.Entry;
 
 import javax.imageio.ImageIO;
 
+//说明:凡是需要返回boolen 型的消息都使用Replydata
 
 public class Message implements Serializable{
 	public int type;
@@ -22,13 +24,13 @@ public class Message implements Serializable{
 	public static final int ADD_FRIEND = 5;
 	public static final int DEL_FRIEND = 6;
 	public static final int UPDATE_FRIEND_ONLINE = 7;
-	public static final int SEARCH = 8;
+	//public static final int SEARCH = 8;
 	//public static final int ADD_PRAISE = 9;
 	//public static final int DEL_PRAISE = 10;
 	//public static final int SEND_CARD = 11;
 	public static final int SEND_MESSAGE = 12;
 	//public static final int IP_DATA = 13;
-	public static final int USER_INFO = 14;
+	//public static final int USER_INFO = 14;
 	//public static final int IS_ONLINE = 15;
 	public static final int GETALBUM = 16;//获得指定相册,需要提供uid 和 path,返回整个相册的信息,包括子相册name,所有图片及评论和name
 	public static final int DEL_ALBUM = 17;//删除指定相册,需要提供path
@@ -62,19 +64,40 @@ public class Message implements Serializable{
 		static final int SEND_CARD = 11;
 		static final int SEND_MESSAGE = 12;
 	*/
-	public String toString(){
+/*	public String toString(){
 		
-		if(type == Message.SEND_MESSAGE){
-			return "from " + ((Message.Send_Message)data).uid;
-		}else if(type == Message.SEND_CARD){
-			return "from " + ((Message.Send_Card)data).uid;
-		}else
-			return "error!";
-	}
+		
+	}*/
 	
 	public abstract class MsgData implements Serializable{
+		
+	}
+	
+	public class GetAlbum extends MsgData implements Serializable{
+		public ArrayList<Pic> pics;
+		public ArrayList<String> albums;
+	}
+	
+	public class DEL_Album extends MsgData implements Serializable{
+		public String path;
 	}
 
+	public class CRE_Album extends MsgData implements Serializable{
+		public String path;
+		public String name;
+	}
+	
+	public class DelPic extends MsgData implements Serializable{
+		public String path;
+		public String name;
+	}
+	
+	public class UploadPic extends MsgData implements Serializable{
+		public String path;//album path
+		public byte[] pic;
+		public String name;
+	}
+	
 	public class LoginMsg extends MsgData implements Serializable{
 		public String uid;
 		public String psw;
@@ -86,11 +109,10 @@ public class Message implements Serializable{
 	}
 
 	public class RegsiterMsg extends MsgData implements Serializable{
-		public String uid;
-		public String psw;
-		public String email;
-		public boolean sex;//false for famale true for male
-		public byte[] head;
+		public String uid;//can't be null
+		public String psw;//can't be null
+		public String email;//can be null
+		public byte[] head;//can be null
 		//public UserInfo user;
 	}
 
@@ -115,14 +137,16 @@ public class Message implements Serializable{
 	public class OnlineFriend extends MsgData implements Serializable{
 		public String uid;
 		public String psw;
-		
+	}
+	
+	public class UPDATE_FriendList extends MsgData implements Serializable{
+		public ArrayList<Entry<String, Boolean>> friends;//每个用户状态该改变 
 	}
 
-	public class Serach extends MsgData implements Serializable{
-		
-	}
+	
+	
 
-	public class Add_Praise extends MsgData implements Serializable{
+	/*public class Add_Praise extends MsgData implements Serializable{
 		public String uid;
 		public String psw;
 		public String word;
@@ -142,18 +166,20 @@ public class Message implements Serializable{
 		public String targetuid;
 		public byte[] card;
 	}
-
+*/
 	public class Send_Message extends MsgData implements Serializable{
 		public String uid;
 		public String psw;
 		public String targetuid;
 		public String dialoge;
 	}
+	
 	public class ReplyData extends MsgData implements Serializable{
 		public boolean success;
 	}
 
-	public class IpData extends MsgData implements Serializable{
+	
+	/*public class IpData extends MsgData implements Serializable{
 		public String uid;
 		public String Ip;
 	}
@@ -166,7 +192,7 @@ public class Message implements Serializable{
 		public String psw;
 		public boolean isOnline;
 	}
-	
+	*/
 	public static byte[] imageToBytes(BufferedImage image){
 		byte[] buf = null;
 		
