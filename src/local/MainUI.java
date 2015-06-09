@@ -933,7 +933,7 @@ public class MainUI extends javax.swing.JFrame{
 
         jToolBar1.setRollover(true);
 
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Picture/back.jpg"))); // NOI18N
+        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("./Picture/back.jpg"))); // NOI18N
         jButton1.setText("����");
         jButton1.setFocusable(false);
         jButton1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -945,7 +945,7 @@ public class MainUI extends javax.swing.JFrame{
         });
         jToolBar1.add(jButton1);
 
-        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Picture/forword.jpg"))); // NOI18N
+        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("./Picture/forword.jpg"))); // NOI18N
         jButton2.setText("ǰ��");
         jButton2.setFocusable(false);
         jButton2.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -957,7 +957,7 @@ public class MainUI extends javax.swing.JFrame{
         });
         jToolBar1.add(jButton2);
 
-        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Picture/up.jpg"))); // NOI18N
+        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("./Picture/up.jpg"))); // NOI18N
         jButton3.setText("����");
         jButton3.setFocusable(false);
         jButton3.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -969,7 +969,7 @@ public class MainUI extends javax.swing.JFrame{
         });
         jToolBar1.add(jButton3);
 
-        jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Picture/refresh.jpg"))); // NOI18N
+        jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("./Picture/refresh.jpg"))); // NOI18N
         jButton4.setText("ˢ��");
         jButton4.setFocusable(false);
         jButton4.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -981,7 +981,7 @@ public class MainUI extends javax.swing.JFrame{
         });
         jToolBar1.add(jButton4);
 
-        jButton5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Picture/delete.jpg"))); // NOI18N
+        jButton5.setIcon(new javax.swing.ImageIcon(getClass().getResource("./Picture/delete.jpg"))); // NOI18N
         jButton5.setText("ɾ��");
         jButton5.setFocusable(false);
         jButton5.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
