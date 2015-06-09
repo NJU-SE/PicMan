@@ -1,5 +1,6 @@
 package inter;
 
+import java.awt.image.BufferedImage;
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -8,21 +9,45 @@ public class Pic implements Serializable{
 	private String picname;//图片名称
 	private String path;//所属相册路径
 	private ArrayList<Comment> comms;//评论信息
+	private byte[] pic;
+	
+	
+	
+	public byte[] getPic() {
+		return pic;
+	}
+	
+	public void setPic(byte[] pic) {
+		this.pic = pic;
+	}
+	
+	public BufferedImage getImage(){
+		return Message.bytesToImage(pic);
+	}
+	
+	public void setImage(BufferedImage image){
+		Message.imageToBytes(image);
+	}
+	
 	public String getPicname() {
 		return picname;
 	}
 	public void setPicname(String picname) {
 		this.picname = picname;
 	}
+	
 	public String getPath() {
 		return path;
 	}
+	
 	public void setPath(String path) {
 		this.path = path;
 	}
+	
 	public ArrayList<Comment> getComms() {
 		return comms;
 	}
+	
 	public void setComms(ArrayList<Comment> comms) {
 		this.comms = (ArrayList<Comment>) comms.clone();
 	}
