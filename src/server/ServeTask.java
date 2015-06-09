@@ -1,5 +1,7 @@
 package server;
 
+import inter.Message;
+
 import java.awt.image.BufferedImage;
 import java.io.BufferedInputStream;
 import java.io.DataInputStream;
@@ -17,13 +19,13 @@ import java.util.Map;
 import javax.swing.JOptionPane;
 
 import sun.net.www.content.text.plain;
-import word.UnionWord;
-import DataBase.DictionaryManager;
-import DataBase.User;
-import DataBase.UserManager;
-import net.*;
-import net.Message.*;
-import net.Message.Message.*;
+//import word.UnionWord;
+//import DataBase.DictionaryManager;
+//import User;
+import database.UserManager;
+//import net.*;
+//import net.Message.*;
+//import net.Message.Message.*;
 
 public class ServeTask extends Task implements Runnable{
 	private Socket userSocket;
@@ -32,7 +34,7 @@ public class ServeTask extends Task implements Runnable{
 	private User user = null;
 	static private Map msgMap;//share with all the server
 	//static private UserManager uManager;//share with all the server
-	static private DictionaryManager dictManager;
+	//static private DictionaryManager dictManager;
 	static private int idCreater = 0;
 	byte[] buff = null;
 	public ServeTask(Socket socket, ArrayList<Message> msgBox){
