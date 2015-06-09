@@ -1,7 +1,11 @@
 package local;
 
 
+import FileNode;
+import FullFrame;
 import MainUI;
+import PFileSystemView;
+import ThreadImages;
 
 import java.awt.Color;
 import java.awt.event.ActionEvent;
@@ -676,28 +680,408 @@ public class MainUI extends javax.swing.JFrame{
     
     /** 标签上的事件监听*/
     public void InitLabelListener() {
+        for (int i = 0; i < SmallLabels.size(); i++) {
+            SmallLabels.get(i).setBorder(null);
+            SmallLabels.get(i).addMouseListener(new java.awt.event.MouseAdapter() {
+
+                public void mouseReleased(MouseEvent evt) {
+                    PopupMenu(evt);
+                }
+
+                public void mousePressed(java.awt.event.MouseEvent evt) {
+                    for (int b = 0; b < SmallLabels.size(); b++) {
+                        SmallLabels.get(b).setBackground(new java.awt.Color(244, 244, 244));
+                    }
+                    JLabel CurrentLabel = new JLabel();
+                    CurrentLabel = (JLabel) evt.getSource();
+                    CurrentLabel.setBackground(new java.awt.Color(194, 194, 194));
+                    int clickTimes = evt.getClickCount();
+
+                    for (int y = 0; y < SmallLabels.size(); y++) {
+                        if (SmallLabels.get(y).getDisplayedMnemonic() == CurrentLabel.getDisplayedMnemonic()) {
+                            SelectImage = y;
+                        }
+                    }
+                    if (clickTimes == 2) {
+                        ImageIcon ic2 = null;
+
+                        for (int t = 0; t < ClickedFilePath.size(); t++) {
+
+                            if (ClickedFilePath.get(t).getName().equals(SmallTextFields.get(SelectImage).getText())) {
+                                System.out.println("点击的图片" + ClickedFilePath.get(t).getAbsolutePath());
+                                ImageIcon TemporaryIcon = new ImageIcon(ClickedFilePath.get(t).getAbsolutePath());
+                                Image TemporaryImage = TemporaryIcon.getImage().getScaledInstance(TemporaryIcon.getIconWidth(), TemporaryIcon.getIconHeight(), Image.SCALE_DEFAULT);
+                                ic2 = new ImageIcon(TemporaryImage);
+                            }
+                        }
+                        FullFrame jj = new FullFrame(ClickedFilePath, SmallTextFields, SelectImage, ImagesQuantity, SmallLabels, "123");
+                        jj.setVisible(true);
+                        jj.getJLabel1().setIcon(ic2);
+                        jj.getJLabel1().setHorizontalAlignment(SwingConstants.CENTER);
+                    }
+                }
+            });
+        }
+    
     
     }
     
     /** 打开函数..(双击打开)*/
     public void Open() {
-    
+        JFileChooser chooser = new JFileChooser();
+        FileNameExtensionFilter filter = new FileNameExtensionFilter(
+                "JPG & GIF Images", "jpg", "gif");
+        chooser.setFileFilter(filter);
+        int returnVal = chooser.showOpenDialog(this);
+        if (returnVal == JFileChooser.APPROVE_OPTION) {
+            SelectImage = -1;
+            FullFrame jj = new FullFrame(ClickedFilePath, SmallTextFields, SelectImage, ImagesQuantity, SmallLabels, chooser.getSelectedFile().getAbsolutePath());
+            ImageIcon ic1 = new ImageIcon(chooser.getSelectedFile().getAbsolutePath());
+            Image im = ic1.getImage().getScaledInstance(ic1.getIconWidth(), ic1.getIconHeight(), Image.SCALE_DEFAULT);
+            ImageIcon ic2 = new ImageIcon(im);
+            jj.getJLabel1().setIcon(ic2);
+            jj.setVisible(true);
+            jj.getJLabel1().setHorizontalAlignment(SwingConstants.CENTER);
+
+        }
     }
     
     /** */
     public void RunTree(final JTree jTree1) {
+        File[] roots = (new PFileSystemView()).getRoots();
+        FileNode nod = null;
+        nod = new FileNode(roots[0]);
+        nod.explore();
+        jTree1.setModel(new DefaultTreeModel(nod));
+        jTree1.addTreeExpansionListener(new TreeExpansionListener() {
+
+            public void treeExpanded(TreeExpansionEvent event) {
+                TreePath path = event.getPath();
+                FileNode node = (FileNode) path.getLastPathComponent();
+                if (!node.isExplored()) {
+                    DefaultTreeModel model = ((DefaultTreeModel) jTree1.getModel());
+                    node.explore();
+                    model.nodeStructureChanged(node);
+                }
+            }
+
+            public void treeCollapsed(TreeExpansionEvent event) {
+            }
+        });
+
+        jTree1.addMouseListener(new MouseAdapter() {
+
+            public void mousePressed(MouseEvent e) {
+
+                ShowImages(e, new TreePath(0), 0);
+                E = e;
+
+            }
+        });
+    
     
     }
     
     /** 展示图片*/
     public void ShowImages(MouseEvent e, TreePath path, int FlagTree) {
+        try {
+
+            Locale systime = Locale.CHINA;
+            SimpleDateFormat timeformat = new SimpleDateFormat("yyyy-MM-dd   HH:mm:ss", systime);
+            String temptime = timeformat.format(new Date());//求得本地机的系统时间;
+            System.out.println("开始的时间为:" + temptime);
+            SmallPanels.clear();
+            SmallLabels.clear();
+            SmallTextFields.clear();
+            ImagePanel.removeAll();
+            ImagePanel.repaint();
+            ImageFiles.clear();
+            int flag = 0;
+            ImagePanel.setLayout(null);
+            String filepath = null;
+            ImagesQuantity = 0;
+
+
+            JTree tree = (JTree) e.getSource();
+            int row = tree.getRowForLocation(e.getX(), e.getY());
+            if (row == -1) {
+                return;
+            }
+            if (FlagTree == 0) {
+                path = tree.getPathForRow(row);
+            }
+
+            if (path == null) {
+                return;
+            }
+            FileNode node = (FileNode) path.getLastPathComponent();
+            if (node == null) {
+                return;
+            }
+            try {
+                filepath = node.getWorR1();
+                FilePath = node.getWorR1();
+                System.out.println("node=" + path);
+            } catch (IOException ex) {
+                Logger.getLogger(MainUI.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            System.out.println(filepath);
+
+            for (int i = 0; i < jComboBox1.getItemCount(); i++) {
+                if (filepath.equals(jComboBox1.getItemAt(i))) {
+                    flag = 1;
+                }
+            }
+            if (flag == 0) {
+                jComboBox1.addItem(filepath);
+                TreePaths.add(path);
+            }
+            jComboBox1.setSelectedItem(filepath);
+            File[] files = node.getWorR().listFiles();
+            ClickedFilePath.clear();
+            for (int FilesQuantity = 0; FilesQuantity < files.length; FilesQuantity++) {
+                ClickedFilePath.add(files[FilesQuantity]);
+            }
+
+            int PictureNumber = 0;
+            for (int CIN = 0; CIN < files.length; CIN++) {
+                String ext = files[CIN].getName().substring(
+                        files[CIN].getName().lastIndexOf("."),
+                        files[CIN].getName().length()).toLowerCase();
+                if (ext.equals(".jpg") || ext.equals(".gif") || ext.equals(".bmp")) {
+                    PictureNumber++;
+                    ImageFiles.add(files[CIN]);
+                }
+            }
+
+            for (int mm = 0; mm < ImageFiles.size(); mm++) {
+                SmallLabels.add(new JLabel());
+                SmallPanels.add(new JPanel());
+                SmallTextFields.add(new JTextField());
+            }
+            int i = ImageFiles.size();
+            Runnable threadimages1 = new ThreadImages(ImageFiles, 0, i / 6, SmallLabels, SmallTextFields, SmallPanels, ImagePanel);
+            Runnable threadimages2 = new ThreadImages(ImageFiles, i / 6, i / 6 * 2, SmallLabels, SmallTextFields, SmallPanels, ImagePanel);
+            Runnable threadimages3 = new ThreadImages(ImageFiles, i / 6 * 2, i / 6 * 3, SmallLabels, SmallTextFields, SmallPanels, ImagePanel);
+            Runnable threadimages4 = new ThreadImages(ImageFiles, i / 6 * 3, i / 6 * 4, SmallLabels, SmallTextFields, SmallPanels, ImagePanel);
+            Runnable threadimages5 = new ThreadImages(ImageFiles, i / 6 * 4, i / 6 * 5, SmallLabels, SmallTextFields, SmallPanels, ImagePanel);
+            Runnable threadimages6 = new ThreadImages(ImageFiles, i / 6 * 5, i, SmallLabels, SmallTextFields, SmallPanels, ImagePanel);
+            Thread t1 = new Thread(threadimages1);
+            Thread t2 = new Thread(threadimages2);
+            Thread t3 = new Thread(threadimages3);
+            Thread t4 = new Thread(threadimages4);
+            Thread t5 = new Thread(threadimages5);
+            Thread t6 = new Thread(threadimages6);
+            t1.start();
+            t2.start();
+            t3.start();
+            t4.start();
+            t5.start();
+            t6.start();
+            /* try {
+            while (t6.isAlive()||t5.isAlive()||t4.isAlive()||t3.isAlive()||t2.isAlive()||t1.isAlive()) {
+            Thread.sleep(500);
+            }
+            } catch (InterruptedException ex) {
+            Logger.getLogger(主界面.class.getName()).log(Level.SEVERE, null, ex);
+            }*/
+            ImagesQuantity = ImageFiles.size();
+            System.out.println("图片总数为:" + ImagesQuantity);
+            InitLabelListener();
+
+            if (ImagesQuantity > 20) {
+                BigScrollPane.getVerticalScrollBar().setVisible(true);
+                if (ImagesQuantity % 5 == 0) {
+                    ImagePanel.setPreferredSize(new Dimension(632, 125 * (ImagesQuantity / 5)));
+                } else {
+                    ImagePanel.setPreferredSize(new Dimension(632, 125 * (ImagesQuantity / 5 + 1)));
+                }
+                BigScrollPane.getVerticalScrollBar().setValue(0);
+            } else {
+                ImagePanel.setPreferredSize(new Dimension(632, 399));
+            }
+
+
+        } catch (StringIndexOutOfBoundsException ex) {
+            ImagePanel.setPreferredSize(new Dimension(632, 399));
+        }
+
+    
     
     }
     
     
     /** 对每个组件进行初始化*/
     private void initComponents() {
-    
+
+        jToolBar1 = new javax.swing.JToolBar();
+        jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
+        jButton4 = new javax.swing.JButton();
+        jButton5 = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTree1 = new javax.swing.JTree();
+        jComboBox1 = new javax.swing.JComboBox();
+        jTabbedPane1 = new javax.swing.JTabbedPane();
+        jComboBox2 = new javax.swing.JComboBox();
+        jMenuBar1 = new javax.swing.JMenuBar();
+        jMenu1 = new javax.swing.JMenu();
+        jMenuItem1 = new javax.swing.JMenuItem();
+        jMenuItem2 = new javax.swing.JMenuItem();
+        jMenu2 = new javax.swing.JMenu();
+        jMenuItem3 = new javax.swing.JMenuItem();
+        jMenu3 = new javax.swing.JMenu();
+        jMenuItem4 = new javax.swing.JMenuItem();
+
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        jToolBar1.setRollover(true);
+
+        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Picture/back.jpg"))); // NOI18N
+        jButton1.setText("后退");
+        jButton1.setFocusable(false);
+        jButton1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButton1.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+        jToolBar1.add(jButton1);
+
+        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Picture/forword.jpg"))); // NOI18N
+        jButton2.setText("前进");
+        jButton2.setFocusable(false);
+        jButton2.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButton2.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+        jToolBar1.add(jButton2);
+
+        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Picture/up.jpg"))); // NOI18N
+        jButton3.setText("向上");
+        jButton3.setFocusable(false);
+        jButton3.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButton3.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
+        jToolBar1.add(jButton3);
+
+        jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Picture/refresh.jpg"))); // NOI18N
+        jButton4.setText("刷新");
+        jButton4.setFocusable(false);
+        jButton4.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButton4.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
+        jToolBar1.add(jButton4);
+
+        jButton5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Picture/delete.jpg"))); // NOI18N
+        jButton5.setText("删除");
+        jButton5.setFocusable(false);
+        jButton5.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButton5.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
+        jToolBar1.add(jButton5);
+
+        jScrollPane1.setViewportView(jTree1);
+        RunTree(jTree1);
+
+        jComboBox1.setPreferredSize(new java.awt.Dimension(62, 14));
+
+        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "请选择文件夹外观", " ", " ", " " }));
+
+        jMenuBar1.setMaximumSize(new java.awt.Dimension(1000, 32769));
+
+        jMenu1.setText("文件");
+
+        jMenuItem1.setText("打开");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItem1);
+
+        jMenuItem2.setText("退出");
+        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem2ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItem2);
+
+        jMenuBar1.add(jMenu1);
+
+        jMenu2.setText("工具");
+
+        jMenuItem3.setText("批量改名");
+        jMenu2.add(jMenuItem3);
+
+        jMenuBar1.add(jMenu2);
+
+        jMenu3.setText("帮助");
+
+        jMenuItem4.setText("关于");
+        jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem4ActionPerformed(evt);
+            }
+        });
+        jMenu3.add(jMenuItem4);
+
+        jMenuBar1.add(jMenu3);
+
+        setJMenuBar(jMenuBar1);
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jComboBox2, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 151, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 685, Short.MAX_VALUE)
+                    .addComponent(jComboBox1, 0, 685, Short.MAX_VALUE)))
+            .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, 842, Short.MAX_VALUE)
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, 54, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 540, Short.MAX_VALUE)
+                        .addGap(2, 2, 2))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 536, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(5, 5, 5)))
+                .addContainerGap())
+        );
+
+        pack();
     }
     
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
@@ -753,26 +1137,6 @@ public class MainUI extends javax.swing.JFrame{
             }
         });
     } 
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
     
     
     
