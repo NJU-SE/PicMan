@@ -1,4 +1,4 @@
-package uUse;
+package clplayer.useAgeCls;
 
 import java.io.IOException;
 import java.net.ServerSocket;
@@ -31,7 +31,7 @@ public class ListenCard implements Runnable{
 	}
 	@Override
 	public void run() {
-		// TODO 自动生成的方法存根
+		// TODO 閼奉亜濮╅悽鐔稿灇閻ㄥ嫭鏌熷▔鏇炵摠閺嶏拷
 		
 	}
 	
@@ -46,7 +46,7 @@ public class ListenCard implements Runnable{
 				//Thread t = new Thread(reveive);
 				t.start();
 				//JOptionPane.showMessageDialog(null,
-				//	       "寮�濮嬫帴鍙�", "绯荤粺淇℃伅", JOptionPane.ERROR_MESSAGE);
+				//	       "鐎殿噯鎷峰┑顔碱儐鐢挳宕ｉ敓锟�", "缂侇垵宕电划鐑樼┍閳╁啩绱�", JOptionPane.ERROR_MESSAGE);
 			}
 		} catch (IOException e) {
 			// TODO Auto-generated catch block

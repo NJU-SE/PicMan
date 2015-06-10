@@ -1,4 +1,4 @@
-package uUse;
+package clplayer.useAgeCls;
 
 import java.awt.image.BufferedImage;
 import java.io.BufferedInputStream;

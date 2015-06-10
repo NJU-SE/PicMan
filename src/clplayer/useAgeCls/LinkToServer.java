@@ -1,4 +1,4 @@
-package uUse;
+package clplayer.useAgeCls;
 
 import java.awt.image.BufferedImage;
 import java.io.IOException;
@@ -406,7 +406,7 @@ public class LinkToServer {
 					Socket cardSocket = new Socket(ip, cardPort);
 					
 					ObjectOutputStream cardStream = new ObjectOutputStream(cardSocket.getOutputStream());
-					data.psw = null;//不能把密码发送出去
+					data.psw = null;//娑撳秷鍏橀幎濠傜槕閻礁褰傞柅浣稿毉閸橈拷
 					cardStream.writeObject(cardMsg);
 					cardStream.flush();
 					cardStream.close();
@@ -497,9 +497,9 @@ public class LinkToServer {
 				if(reply != null){
 					requestMap.remove(id);
 					return reply;
-				}else if(loop > 160){//4s超时
+				}else if(loop > 160){//4s鐡掑懏妞�
 					System.out.println("time out");
-					requestMap.remove(id);//删除注册请求
+					requestMap.remove(id);//閸掔娀娅庡▔銊ュ斀鐠囬攱鐪�
 					return null;
 				}
 			}

@@ -1,4 +1,4 @@
-package uUse;
+package clplayer.useAgeCls;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,7 +26,7 @@ public class RefreshList implements Runnable {
 			dlist.removeAllElements();
 			
 			System.out.println("try to refresh list $$$$$$$$$$$$$$$$$$$");
-				//鎵惧埌浜嗘柊鐨勫崟璇嶅垪琛�,閭ｄ箞鏇存柊list涓殑鍗曡瘝
+				//闁瑰灚鍎抽崺灞剧閸℃ɑ鐓�闁汇劌瀚畷鐔烘嫚瀹ュ懎鐏欓悶娑虫嫹,闂侇叏绲肩粻鐐哄即鐎涙ɑ鐓�list濞戞搩鍘惧▓鎴﹀础閺囷紕妲�
 			if(link.isOnline()){
 				ArrayList<UserInfo> online = link.getOnlineFriend();
 				if(online != null){
@@ -43,7 +43,7 @@ public class RefreshList implements Runnable {
 			}
 	*/
 			try {
-				//list.setModel(dlist);//鏇存柊鍒楄〃涓殑鍏冪礌
+				//list.setModel(dlist);//闁哄洤鐡ㄩ弻濠囧礆濡ゅ嫨锟藉啯绋夐鐘崇暠闁稿繐鍟扮粈锟�
 			//	list.repaint();
 				Thread.sleep(3000);
 			} catch (InterruptedException e) {
