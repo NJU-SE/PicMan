@@ -13,7 +13,7 @@ import java.util.Map.Entry;
 
 import javax.imageio.ImageIO;
 
-//说明:凡是需要返回boolen 型的消息都使用Replydata
+//璇存槑:鍑℃槸闇�瑕佽繑鍥瀊oolen 鍨嬬殑娑堟伅閮戒娇鐢≧eplydata
 
 public class Message implements Serializable{
 	public int id;
@@ -33,15 +33,15 @@ public class Message implements Serializable{
 	//public static final int IP_DATA = 13;
 	//public static final int USER_INFO = 14;
 	//public static final int IS_ONLINE = 15;
-	public static final int GETALBUM = 16;//获得指定相册,需要提供uid 和 path,返回整个相册的信息,包括子相册name,所有图片及评论和name
-	public static final int DEL_ALBUM = 17;//删除指定相册,需要提供path
-	public static final int CRE_ALBUM = 18;//创建相册,需要提供path和name
-	public static final int UPLOAD_PIC = 19;//上传图片到指定相册,需要指定相册path和图片,以及图片名称
-	public static final int DEL_PIC = 20;//删除图片,需要指定相册path和图片名称
-	public static final int ADD_MSG = 21;//为图片添加评论,需要指定相册path,图片name和评论信息
+	public static final int GETALBUM = 16;//鑾峰緱鎸囧畾鐩稿唽,闇�瑕佹彁渚泆id 鍜� path,杩斿洖鏁翠釜鐩稿唽鐨勪俊鎭�,鍖呮嫭瀛愮浉鍐宯ame,鎵�鏈夊浘鐗囧強璇勮鍜宯ame
+	public static final int DEL_ALBUM = 17;//鍒犻櫎鎸囧畾鐩稿唽,闇�瑕佹彁渚沺ath
+	public static final int CRE_ALBUM = 18;//鍒涘缓鐩稿唽,闇�瑕佹彁渚沺ath鍜宯ame
+	public static final int UPLOAD_PIC = 19;//涓婁紶鍥剧墖鍒版寚瀹氱浉鍐�,闇�瑕佹寚瀹氱浉鍐宲ath鍜屽浘鐗�,浠ュ強鍥剧墖鍚嶇О
+	public static final int DEL_PIC = 20;//鍒犻櫎鍥剧墖,闇�瑕佹寚瀹氱浉鍐宲ath鍜屽浘鐗囧悕绉�
+	public static final int ADD_MSG = 21;//涓哄浘鐗囨坊鍔犺瘎璁�,闇�瑕佹寚瀹氱浉鍐宲ath,鍥剧墖name鍜岃瘎璁轰俊鎭�
 	
-	//需要商讨
-	public static final int DEL_MSG = 22;//删除自己的评论,需要指定相册path,图片name和评论id.
+	//闇�瑕佸晢璁�
+	public static final int DEL_MSG = 22;//鍒犻櫎鑷繁鐨勮瘎璁�,闇�瑕佹寚瀹氱浉鍐宲ath,鍥剧墖name鍜岃瘎璁篿d.
 	public static final int REPLY = 23;
 	public MsgData data;
 	
@@ -141,7 +141,7 @@ public class Message implements Serializable{
 	}
 	
 	public class UPDATE_FriendList extends MsgData implements Serializable{
-		public ArrayList<Entry<String, Boolean>> friends;//每个用户状态该改变 
+		public ArrayList<Entry<String, Boolean>> friends;//姣忎釜鐢ㄦ埛鐘舵�佽鏀瑰彉 
 	}
 
 	

@@ -1,7 +1,8 @@
 eclipse.preferences.version=1
 encoding//src/clplayer/myClsDealer.java=UTF-8
-encoding//src/clplayer/serveServer.java=UTF-8
+encoding//src/clplayer/serveUI.java=UTF-8
 encoding//src/clplayer/useAgeCls/LinkToServer.java=UTF-8
 encoding//src/clplayer/useAgeCls/ListenCard.java=UTF-8
 encoding//src/clplayer/useAgeCls/ListenMessage.java=UTF-8
 encoding//src/clplayer/useAgeCls/RefreshList.java=UTF-8
+encoding//src/inter/Message.java=UTF-8

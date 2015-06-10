@@ -13,7 +13,7 @@ import javax.swing.JOptionPane;
 
 import inter.Message;
 
-public class serveServer {
+public class serveUI {
 	private static String ip = "localhost";
 	private static int port = 8888;
 	private static int idCreater = 0;
@@ -29,7 +29,7 @@ public class serveServer {
 	private String psw;
 	private ObjectOutputStream objOut;
 	private static Map requestMap;
-	public serveServer(Map requestMap,final Socket socket){
+	public serveUI(Map requestMap,final Socket socket){
 		try {
 			this.socket =socket;
 			objOut = new ObjectOutputStream(socket.getOutputStream());
@@ -45,7 +45,7 @@ public class serveServer {
 			e.printStackTrace();
 		}
 	}
-	public serveServer(Map requestMap, String uid, String psw,final Socket socket){
+	public serveUI(Map requestMap, String uid, String psw,final Socket socket){
 		this(requestMap, socket);
 		this.uid =uid;
 		this.psw = psw;

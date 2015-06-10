@@ -17,11 +17,12 @@ import javax.swing.JButton;
 import javax.swing.JList;
 
 import clplayer.myClsDealer;
-import clplayer.serveServer;
+import clplayer.serveUI;
+import clplayer.serveUI;
 import inter.Message;
 
 public class Client {
-	public static serveServer getLink(JList list, JButton msgButton, JList msgList, ArrayList<Message> msgBox){
+	public static serveUI getLink(JList list, JButton msgButton, JList msgList, ArrayList<Message> msgBox){
 		BufferedInputStream bis;
 		String ip = null;
 		int server_port = 8888;
@@ -69,7 +70,7 @@ public class Client {
 			}
 			
 		}
-		serveServer link = new serveServer(requests, socket);
+		serveUI link = new serveUI(requests, socket);
 		
 		myClsDealer msgs = new myClsDealer(requests, socket, msgButton, msgList, msgBox);
 		
