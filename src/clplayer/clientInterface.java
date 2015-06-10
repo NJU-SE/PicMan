@@ -19,7 +19,12 @@ import javax.swing.JList;
 import inter.Message;
 
 public class clientInterface {
-	public static serveServer getLink(JList list, JButton msgButton, JList msgList, ArrayList<Message> msgBox){
+	public static serveUI getLinkMy(){
+		
+		return null;
+		
+	}
+	public static serveUI getLink(JList list, JButton msgButton, JList msgList, ArrayList<Message> msgBox){
 		BufferedInputStream bis;
 		String ip = null;
 		int server_port = 8888;
@@ -67,7 +72,7 @@ public class clientInterface {
 			}
 			
 		}
-		serveServer link = new serveServer(requests, socket);
+		serveUI link = new serveUI(requests, socket);
 		
 		myClsDealer msgs = new myClsDealer(requests, socket, msgButton, msgList, msgBox);
 		
@@ -81,8 +86,6 @@ public class clientInterface {
 		//test(link);
 		tmsg.start();
 		//tre.start();
-		
-		
 		return link;
 	}
 	/*public static void test(LinkToServer link){
