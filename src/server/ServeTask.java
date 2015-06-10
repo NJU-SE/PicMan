@@ -258,7 +258,7 @@ public class ServeTask extends Task implements Runnable{
 			msgBox.add(reply);
 		}
 	}
-	private void sendCard(Message msg) {
+	/*private void sendCard(Message msg) {
 		// TODO Auto-generated method stub
 		System.out.println("Enter Send card^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^");
 		Message.Send_Card sendCard = (Message.Send_Card)(msg.data);
@@ -290,6 +290,7 @@ public class ServeTask extends Task implements Runnable{
 			msgBox.add(ipReply);
 		}
 	}
+	*/
 	private void sendMsg(Message msg) {
 		
 		// TODO Auto-generated method stub
@@ -326,7 +327,10 @@ public class ServeTask extends Task implements Runnable{
 		}
 		
 	}
-	private void search(Message msg) {
+	
+	/*
+	 * private void search(Message msg) {
+	 
 		// TODO Auto-generated method stub
 		Message.Serach request = (Message.Serach)(msg.data);
 		Message reply = new Message();
@@ -348,6 +352,9 @@ public class ServeTask extends Task implements Runnable{
 			msgBox.add(reply);
 		}
 	}
+	*/
+	
+	
 	private void changePsw(Message msg) {
 		// TODO Auto-generated method stub
 		Message.ChangePsw chPsw= (Message.ChangePsw)(msg.data);
@@ -459,7 +466,8 @@ public class ServeTask extends Task implements Runnable{
 	/*public static void setUserManager(UserManager um){
 		ServeTask.uManager = um;
 	}*/
-	public static void setDictionaryManager(DictionaryManager dictm){
+/*	public static void setDictionaryManager(DictionaryManager dictm){
 		ServeTask.dictManager = dictm;
 	}
+	*/
 }
