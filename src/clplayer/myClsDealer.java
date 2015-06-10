@@ -13,14 +13,14 @@ import javax.swing.JList;
 
 import inter.Message;
 
-public class ListenMessage implements Runnable{
+public class myClsDealer implements Runnable{
 	private static Map requestMap;
 	private Socket socket;
 	private ObjectInputStream objIn;
 	private JButton msgButton;
 	private JList msgList;
 	private ArrayList<Message> msgs;
-	public ListenMessage(Map requestMap, final Socket socket, JButton msgButton, JList msgList, ArrayList msgs){
+	public myClsDealer(Map requestMap, final Socket socket, JButton msgButton, JList msgList, ArrayList msgs){
 		System.out.println("ctrating listen msg~~");
 		this.requestMap = requestMap;
 		this.socket = socket;
