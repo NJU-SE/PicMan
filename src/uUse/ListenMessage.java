@@ -1,4 +1,4 @@
-package clplayer;
+package uUse;
 
 import java.io.BufferedInputStream;
 import java.io.IOException;
@@ -11,8 +11,7 @@ import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JList;
 
-import System.UserInfo;
-import net.Message.Message;
+import inter.Message;
 
 public class ListenMessage implements Runnable{
 	private static Map requestMap;
@@ -45,7 +44,7 @@ public void run() {
 					objIn = new ObjectInputStream(new BufferedInputStream(socket.getInputStream()));	
 				
 				msg = (Message)(objIn.readObject());
-				//char eof = fromClient.readChar();//将文件结束符读出来；
+				//char eof = fromClient.readChar();//灏嗘枃浠剁粨鏉熺璇诲嚭鏉ワ紱
 				//fromClient.close();
 				
 				System.out.println("receive a msg");
@@ -55,7 +54,7 @@ public void run() {
 				
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
-				objIn = null;//重置输入流
+				objIn = null;//閲嶇疆杈撳叆娴�
 				e.printStackTrace();
 				try {
 					socket.close();
@@ -67,10 +66,10 @@ public void run() {
 			}
 			if(msg == null)
 				continue;
-			if(msg.reply){// themsg is a reply
+			/*if(msg.reply){// themsg is a reply
 				System.out.println("reply to:"+ msg.id);
 				synchronized(requestMap){
-					if(requestMap.containsKey(msg.id))//有相应的请求才会加入，否则说明该返回已经超时，丢弃
+					if(requestMap.containsKey(msg.id))//鏈夌浉搴旂殑璇锋眰鎵嶄細鍔犲叆锛屽惁鍒欒鏄庤杩斿洖宸茬粡瓒呮椂锛屼涪寮�
 						requestMap.put(msg.id, msg);
 				}
 				
@@ -87,11 +86,11 @@ public void run() {
 						dlist.addElement(m);
 					}
 				}
-				msgList.setModel(dlist);//更新列表中的元素
+				msgList.setModel(dlist);//鏇存柊鍒楄〃涓殑鍏冪礌
 				synchronized(msgs){
 					msgButton.setText(msgs.size() +" Message");
 				}
-			}
+			}*/
 		
 		}
 	

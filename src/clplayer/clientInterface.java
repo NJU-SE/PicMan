@@ -19,7 +19,7 @@ import javax.swing.JList;
 import inter.Message;
 
 public class clientInterface {
-	public static LinkToServer getLink(JList list, JButton msgButton, JList msgList, ArrayList<Message> msgBox){
+	public static serveServer getLink(JList list, JButton msgButton, JList msgList, ArrayList<Message> msgBox){
 		BufferedInputStream bis;
 		String ip = null;
 		int server_port = 8888;
@@ -67,25 +67,25 @@ public class clientInterface {
 			}
 			
 		}
-		LinkToServer link = new LinkToServer(requests, socket);
+		serveServer link = new serveServer(requests, socket);
 		
-		ListenMessage msgs = new ListenMessage(requests, socket, msgButton, msgList, msgBox);
+		myClsDealer msgs = new myClsDealer(requests, socket, msgButton, msgList, msgBox);
 		
 	
-		RefreshList refresh = new RefreshList(link, list);
+		//RefreshList refresh = new RefreshList(link, list);
 		Thread tmsg = new Thread(msgs);
 		
 		
-		Thread tre = new  Thread(refresh);
+		//Thread tre = new  Thread(refresh);
 		
 		//test(link);
 		tmsg.start();
-		tre.start();
+		//tre.start();
 		
 		
 		return link;
 	}
-	public static void test(LinkToServer link){
+	/*public static void test(LinkToServer link){
 		
 		System.out.println("login is"+link.login("jam", "guoruijun"));
 		while(true){
@@ -102,5 +102,5 @@ public class clientInterface {
 			}
 
 		}
-	}
+	}*/
 }

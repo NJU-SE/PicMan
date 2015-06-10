@@ -1,4 +1,4 @@
-package clplayer;
+package uUse;
 
 import java.io.IOException;
 import java.net.ServerSocket;
@@ -9,7 +9,7 @@ import javax.swing.JButton;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 
-import net.Message.Message;
+import inter.Message;
 
 public class ListenCard implements Runnable{
 	private ServerSocket listenSocket;
@@ -29,25 +29,30 @@ public class ListenCard implements Runnable{
 			e.printStackTrace();
 		}
 	}
-	
 	@Override
 	public void run() {
+		// TODO 自动生成的方法存根
+		
+	}
+	
+/*	public void run() {
 		// TODO Auto-generated method stub
 		try {
 			while(true){
 				System.out.println("running listencard listencard~~~");
 				Socket newCard = listenSocket.accept();
 				newCard.setTcpNoDelay(true);
-				ReceiveCard reveive = new ReceiveCard(newCard, msgButton, msgList, msgBox);
-				Thread t = new Thread(reveive);
+				//ReceiveCard reveive = new ReceiveCard(newCard, msgButton, msgList, msgBox);
+				//Thread t = new Thread(reveive);
 				t.start();
 				//JOptionPane.showMessageDialog(null,
-				//	       "开始接受", "系统信息", JOptionPane.ERROR_MESSAGE);
+				//	       "寮�濮嬫帴鍙�", "绯荤粺淇℃伅", JOptionPane.ERROR_MESSAGE);
 			}
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
+	*/
 
 }

@@ -1,4 +1,4 @@
-package clplayer;
+package uUse;
 
 import java.io.BufferedInputStream;
 import java.io.FileInputStream;
@@ -16,24 +16,26 @@ import java.util.Properties;
 import javax.swing.JButton;
 import javax.swing.JList;
 
+import clplayer.myClsDealer;
+import clplayer.serveServer;
 import inter.Message;
 
 public class Client {
-	public static LinkToServer getLink(JList list, JButton msgButton, JList msgList, ArrayList<Message> msgBox){
+	public static serveServer getLink(JList list, JButton msgButton, JList msgList, ArrayList<Message> msgBox){
 		BufferedInputStream bis;
 		String ip = null;
 		int server_port = 8888;
 		int card_port = 8005;
 		try {
 			bis = new BufferedInputStream(
-					new FileInputStream("Client\\client.conf.properties"));
+					new FileInputStream("./client.conf.properties"));
 			Properties properties = new Properties();
 			properties.load(bis);
 			
 			ip = properties.getProperty("server_ip", "127.0.0.1");
 			System.out.println("the ip is :~~~~~~"+ip);
 			server_port = Integer.valueOf(properties.getProperty("server_port", "8888"));
-			card_port = Integer.valueOf(properties.getProperty("card_port", "8005"));
+			//card_port = Integer.valueOf(properties.getProperty("card_port", "8005"));
 			 URI uri = new java.net.URI(properties.getProperty("welcome_path"));
 			 java.awt.Desktop.getDesktop().browse(uri);
 		}catch(FileNotFoundException e){
@@ -67,28 +69,25 @@ public class Client {
 			}
 			
 		}
-		LinkToServer link = new LinkToServer(requests, socket);
+		serveServer link = new serveServer(requests, socket);
 		
-		ListenMessage msgs = new ListenMessage(requests, socket, msgButton, msgList, msgBox);
-		
+		myClsDealer msgs = new myClsDealer(requests, socket, msgButton, msgList, msgBox);
 		
 	
-		RefreshList refresh = new RefreshList(link, list);
+		//RefreshList refresh = new RefreshList(link, list);
 		Thread tmsg = new Thread(msgs);
 		
 		
-		Thread tcard = new Thread(card);
-		Thread tre = new  Thread(refresh);
+		//Thread tre = new  Thread(refresh);
 		
 		//test(link);
-		tcard.start();
 		tmsg.start();
-		tre.start();
+		//tre.start();
 		
 		
 		return link;
 	}
-	public static void test(LinkToServer link){
+	/*public static void test(LinkToServer link){
 		
 		System.out.println("login is"+link.login("jam", "guoruijun"));
 		while(true){
@@ -105,5 +104,5 @@ public class Client {
 			}
 
 		}
-	}
+	}*/
 }
