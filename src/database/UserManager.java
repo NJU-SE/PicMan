@@ -16,13 +16,14 @@ import java.util.HashMap;
 
 import javax.swing.JOptionPane;
 
+//import DataBase.DataBase;
 import server.User;
-import word.Word;
-import System.Sever;
-import System.UserInfo;
+//import word.Word;
+//import System.Sever;
+//import System.UserInfo;
 
 public class UserManager {
-	private static ArrayList<User> onlineUser = new ArrayList<User>();
+	//private static ArrayList<User> onlineUser = new ArrayList<User>();
 	
 	
 	public static boolean createUser(String account,String Pw){
@@ -31,8 +32,8 @@ public class UserManager {
 		try {
 			conn = DataBase.connect();
 			Statement statement = conn.createStatement();
-			String sql = "insert into USERTABLE(username,password) values('"
-					+account+"','"+Pw+"');";
+			String sql = "insert into USERTABLE(uid,pwd,online) values('"
+					+account+"','"+Pw+"',false);";
 			change = statement.execute(sql);
 		} catch (SQLException e) {
 			//e.printStackTrace();
@@ -45,14 +46,14 @@ public class UserManager {
 		return true;
 	}
 	
-	public static boolean createUser(String account,String Pw,String email, boolean sex){
+	public static boolean createUser(String account,String Pw,String email){
 		boolean change = false;
 		Connection conn = null;
 		try {
 			conn = DataBase.connect();
 			Statement statement = conn.createStatement();
-			String sql = "insert into USERTABLE(username,password,email,sex) values('"
-					+account+"','"+Pw+"','"+email+"',"+(sex?"true":"false")+");";
+			String sql = "insert into USERTABLE(uid,pwd,email,online) values('"
+					+account+"','"+Pw+"','"+email+"', false );";
 			change = statement.execute(sql);
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -65,7 +66,51 @@ public class UserManager {
 		return change;
 	}
 	
-	public static boolean createUser(User usrinfo){
+
+	public static boolean createUser(String account,String Pw, byte[] head, String email){
+		boolean change = false;
+		try {
+			PreparedStatement statement;
+			Connection conn = DataBase.connect();
+			statement = conn.prepareStatement("insert into USERTABLE(uid,pwd,head,email,online) values((?),(?),(?),(?),(?));");
+			statement.setString(1, account);
+			statement.setString(2, Pw);
+			statement.setObject(3, head);
+			statement.setString(4, email);
+			statement.setBoolean(5, false);
+			change = statement.execute();
+			DataBase.close(conn);
+		} catch (SQLException e) {
+			e.printStackTrace();
+			JOptionPane.showMessageDialog(null,
+				       "创建用户已存在", "系统信息", JOptionPane.ERROR_MESSAGE);
+			return false;
+		}
+		return true;
+	}
+	
+	public static boolean createUser(String account,String Pw, byte[] head){
+		boolean change = false;
+		try {
+			PreparedStatement statement;
+			Connection conn = DataBase.connect();
+			statement = conn.prepareStatement("insert into USERTABLE(uid,pwd,head,online) values((?),(?),(?),(?));");
+			statement.setString(1, account);
+			statement.setString(2, Pw);
+			statement.setObject(3, head);
+			//statement.setString(4, email);
+			statement.setBoolean(4, false);
+			change = statement.execute();
+			DataBase.close(conn);
+		} catch (SQLException e) {
+			e.printStackTrace();
+			JOptionPane.showMessageDialog(null,
+				       "创建用户已存在", "系统信息", JOptionPane.ERROR_MESSAGE);
+			return false;
+		}
+		return true;
+	}
+/*	public static boolean createUser(User usrinfo){
 		boolean change = false;
 		Connection conn = null;
 		try {
@@ -85,7 +130,7 @@ public class UserManager {
 		}
 		return change;
 	}
-	
+	*/
 	public static boolean addFriend(String account1, String account2){
 		boolean change = false;
 		Connection conn = null;
@@ -99,7 +144,7 @@ public class UserManager {
 				System.out.println("User not exists");
 				return false;
 			}*/
-			sql = "insert into FriendRelation(username1,username2) values('"
+			sql = "insert into FRIEND(uid1,uid2) values('"
 					+account1+"','"+account2+"');";
 			change = true;
 			statement.execute(sql);
