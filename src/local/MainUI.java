@@ -2,10 +2,15 @@ package local;
 
 import inter.*;
 import clplayer.*;
+import clplayer.useAgeCls.*;
+
 import java.awt.Color;
 import java.awt.event.ActionEvent;
+
 import javax.swing.*;
+
 import java.awt.Dimension;
+import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.Point;
 import java.awt.Robot;
@@ -23,6 +28,7 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 import javax.swing.event.PopupMenuEvent;
 import javax.swing.event.PopupMenuListener;
 import javax.swing.event.TreeExpansionEvent;
@@ -42,6 +48,29 @@ public class MainUI extends javax.swing.JFrame {
     int ImagesQuantity;                                         //这里定义的是图片的总数
     int SelectImage = -1;                                    //这里定义的是选择的图片，0为第一张，-1是未选择
     JFrame IntroduceFrame = new JFrame();                        //帮助里的关于介绍软件作者而弹出的面板
+    /*------------------------------------------*/
+    //TODO: 这里todo只是为了提醒下，这里代码需要注意
+    JFrame loginFrame = new JFrame();			//登录时候的界面
+    JFrame regFrame = new JFrame();				//注册时候的界面
+    
+    JTextField loginID = new JTextField();
+    JPasswordField loginPsw = new JPasswordField();
+    JButton loginOK = new JButton("登录");
+    JButton loginCancel = new JButton("取消");
+    JLabel IDlabel = new JLabel("用户ID");
+    JLabel pswLabel = new JLabel("密码");
+    JLabel IDlabel2 = new JLabel("用户ID");
+    JLabel pswLabel2 = new JLabel("密码");
+    JLabel pswConfig = new JLabel("重复密码");
+    
+    JTextField regID = new JTextField();
+    JPasswordField regPsw = new JPasswordField();
+    JPasswordField regPswConf = new JPasswordField();
+    JButton regOk = new JButton("注册");
+    JButton regCancel = new JButton("取消");
+    
+    
+    /*------------------------------------------*/
     JTextArea IntroduceTextArea = new JTextArea();                //同上，介绍软件作者的文本域，被加在了面板上
     JPopupMenu PopupMenu = new JPopupMenu();                      //右键单击文件时弹出的弹出式菜单
     JMenuItem Copy = new JMenuItem(" 复制 ");                    // 菜单中的复制选项
@@ -91,11 +120,46 @@ public class MainUI extends javax.swing.JFrame {
         IntroduceFrame.add(IntroduceTextArea);
         IntroduceTextArea.setEditable(false);            //文本设为不可编辑
     }
-
+    /*初始化登录界面*/
+    public void InitLoginFrame(){
+    	loginFrame.setVisible(false);
+    	loginFrame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);//点叉的时候只是隐藏面板
+    	loginFrame.setSize(220, 130);
+    	loginFrame.setLocationRelativeTo(null);      //弹出面板时在屏幕的中央
+        GridLayout gridLayout = new GridLayout(3,2);
+        loginFrame.setLayout(gridLayout);    	
+        loginFrame.add(IDlabel);
+        loginFrame.add(loginID);
+        loginFrame.add(pswLabel);
+        loginFrame.add(loginPsw);
+        loginFrame.add(loginOK);
+        loginFrame.add(loginCancel);
+    }
+    /*初始化注册界面*/
+    public void InitRegFrame(){
+    	regFrame.setVisible(false);
+    	regFrame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);//点叉的时候只是隐藏面板
+    	regFrame.setSize(220, 140);
+    	regFrame.setLocationRelativeTo(null);      //弹出面板时在屏幕的中央
+        GridLayout gridLayout = new GridLayout(4,2);
+        regFrame.setLayout(gridLayout);    	
+        regFrame.add(IDlabel2);
+        regFrame.add(regID);
+        regFrame.add(pswLabel2);
+        regFrame.add(regPsw);
+        regFrame.add(pswConfig);
+        regFrame.add(regPswConf);
+        regFrame.add(regOk);
+        regFrame.add(regCancel);
+    }
+    
     /*初始化一些必要的数据*/
     public void Init() {
 
         InitIntroduction();
+        InitRegFrame();
+        InitLoginFrame();
+        
         BigScrollPane = new JScrollPane(ImagePanel);         //滚动面板里加上显示用于显示图像的大面板
         ImagePanel.setLayout(null);                             //图像面板的布局设为null（这点非常重要）
         jTabbedPane1.add(BigScrollPane);                    //在标签化窗口中加入已有图像面板的滚动面板
@@ -107,6 +171,33 @@ public class MainUI extends javax.swing.JFrame {
         OutPopupMenu.add(Refresh);
         OutPopupMenu.add(Paste);
         OutPopupMenu.add(BatchRename);
+        
+        loginOK.addActionListener(new java.awt.event.ActionListener() {
+
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+            	loginOKActionPerformed(evt);
+            }
+        });
+        loginCancel.addActionListener(new java.awt.event.ActionListener() {
+
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+            	loginCancelActionPerformed(evt);
+            }
+        });
+        regOk.addActionListener(new java.awt.event.ActionListener() {
+
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+            	regOKActionPerformed(evt);
+            }
+        });
+        regCancel.addActionListener(new java.awt.event.ActionListener() {
+
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+            	regCancelActionPerformed(evt);
+            }
+        });        
+        
+        
         jComboBox1.addPopupMenuListener(new PopupMenuListener() {
 
             public void popupMenuWillBecomeVisible(PopupMenuEvent e) {
@@ -1033,8 +1124,6 @@ public class MainUI extends javax.swing.JFrame {
         jButton7 = new javax.swing.JButton();
         msgButton = new javax.swing.JButton();
         friendButton = new javax.swing.JButton();
-        buttonPointer = jButton6;
-        
         
         jScrollPane1 = new javax.swing.JScrollPane();
         jTree1 = new javax.swing.JTree();
@@ -1324,18 +1413,19 @@ public class MainUI extends javax.swing.JFrame {
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         //TODO: 调用登录方法
-    	Delete();
+    	loginFrame.setVisible(true);
     }//GEN-LAST:event_jButton5ActionPerformed
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-        //TODO: 调用注册方法
-//    	buttonPointer = jButton7;
+    	//TODO: 调用注册方法
+    	regFrame.setVisible(true);
+    	/*
+    	//    	buttonPointer = jButton7;
     	int i = jToolBar1.getComponentIndex(jButton6);
     	jToolBar1.remove(jButton6);
     	jToolBar1.add(jButton7,i);
     	
     	jToolBar1.repaint();
-    	
-//    	Delete();
+    	*/
     }//GEN-LAST:event_jButton5ActionPerformed
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         //TODO: 调用注销方法
@@ -1348,14 +1438,38 @@ public class MainUI extends javax.swing.JFrame {
 
     private void msgButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         //TODO: 信箱
-    	Delete();
+
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void friendButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         //TODO: 弹出好友列表面板
-    	Delete();
+
     }//GEN-LAST:event_jButton5ActionPerformed
 
+    /** 下面是处理登录和注册的listener*/
+    private void loginOKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        //TODO: 登录。。。调用登录方法
+    	System.out.println(loginID.getText().trim());
+    	System.out.println(loginPsw.getText().trim());
+    }//GEN-LAST:event_jButton5ActionPerformed
+    private void loginCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        //TODO: 登录、。。。点击取消
+    	loginFrame.setVisible(false);
+    }//GEN-LAST:event_jButton5ActionPerformed
+    private void regOKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        //TODO: 注册。。。点击注册
+    	System.out.println(regID.getText().trim());
+    	System.out.println(regPsw.getText().trim());
+    	System.out.println(regPswConf.getText().trim());
+    	
+    }//GEN-LAST:event_jButton5ActionPerformed
+    private void regCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        //TODO: 注册。。。点击取消
+    	regFrame.setVisible(false);
+    }//GEN-LAST:event_jButton5ActionPerformed
+
+    
+    
     public static void main(String args[]) {
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());//尝试使用系统外观
@@ -1386,7 +1500,6 @@ public class MainUI extends javax.swing.JFrame {
     
     private javax.swing.JButton jButton7; // 注销
     //当做指针来使用的组件
-    private javax.swing.JButton buttonPointer; 
     
     public  javax.swing.JButton msgButton;
     public javax.swing.JButton friendButton;
