@@ -1,4 +1,4 @@
-package clplayer;
+package clplayer.useAgeCls;
 
 import java.awt.image.BufferedImage;
 import java.io.BufferedInputStream;
@@ -13,8 +13,9 @@ import javax.swing.JButton;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 
-import wordcard.WordCard;
-import net.Message.Message;
+/*import wordcard.WordCard;
+import net.Message.Message;*/
+import inter.Message;
 
 public class ReceiveCard implements Runnable{
 

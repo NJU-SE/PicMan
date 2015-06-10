@@ -1,4 +1,4 @@
-package clplayer;
+package clplayer.useAgeCls;
 
 import java.awt.image.BufferedImage;
 import java.io.IOException;
@@ -11,9 +11,7 @@ import java.util.Map;
 
 import javax.swing.JOptionPane;
 
-import net.Message.Message;
-import System.UserInfo;
-import word.UnionWord;
+import inter.Message;
 
 public class LinkToServer {
 	private static String ip = "localhost";
@@ -53,7 +51,7 @@ public class LinkToServer {
 		this.psw = psw;
 	}
 	
-	public boolean isOnline(){
+	/*public boolean isOnline(){
 		Message online = new Message();
 		online.id = idCreater ++;
 		online.reply = false;
@@ -81,12 +79,13 @@ public class LinkToServer {
 		return false;
 		
 	}
+	*/
 	public boolean login(String uid, String psw){
 		this.uid = uid;
 		this.psw = psw;
 		Message loginMessage = new Message();
 		loginMessage.id = idCreater ++;
-		loginMessage.reply = false;
+		//loginMessage.reply = false;
 		loginMessage.type = Message.LOGIN;
 		Message.LoginMsg data = loginMessage.new LoginMsg();
 		loginMessage.data = data;
@@ -113,7 +112,7 @@ public class LinkToServer {
 	public boolean logout(){
 		Message logoutMessage = new Message();
 		logoutMessage.id = idCreater ++;
-		logoutMessage.reply = false;
+		//logoutMessage.reply = false;
 		logoutMessage.type = Message.LOGOUT;
 		Message.LogoutMsg data = logoutMessage.new LogoutMsg();
 		logoutMessage.data = data;
@@ -143,14 +142,14 @@ public class LinkToServer {
 	public boolean register(String uid, String psw, String email, boolean sex, BufferedImage head){
 		Message rigisterMsg = new Message();
 		rigisterMsg.id = idCreater ++;
-		rigisterMsg.reply = false;
+		//rigisterMsg.reply = false;
 		rigisterMsg.type = Message.REGISTER;
 		Message.RegsiterMsg data = rigisterMsg.new RegsiterMsg();
 		rigisterMsg.data = data;
 		data.uid = uid;
 		data.psw = psw;
 		data.email = email;
-		data.sex = sex;
+		//data.sex = sex;
 		data.head = Message.imageToBytes(head);
 		try {
 			System.out.println("sending a register msg");
@@ -176,7 +175,7 @@ public class LinkToServer {
 	public boolean changePsw(String newpsw){
 		Message changeMsg = new Message();
 		changeMsg.id = idCreater ++;
-		changeMsg.reply = false;
+		//changeMsg.reply = false;
 		changeMsg.type = Message.CHANGE_PSW;
 		Message.ChangePsw data = changeMsg.new ChangePsw();
 		changeMsg.data = data;
@@ -202,7 +201,7 @@ public class LinkToServer {
 		}
 		return false;
 	}
-	public UnionWord serach(String word){
+	/*public UnionWord serach(String word){
 		Message serachMsg = new Message();
 		serachMsg.id = idCreater ++;
 		serachMsg.reply = false;
@@ -230,18 +229,18 @@ public class LinkToServer {
 		}
 		return null;
 		
-	}
+	}*/
 	public boolean addPrise(String word, int type){
 		Message addPriseMsg = new Message();
 		addPriseMsg.id = idCreater ++;
-		addPriseMsg.reply = false;
-		addPriseMsg.type = Message.ADD_PRAISE;
-		Message.Add_Praise data = addPriseMsg.new Add_Praise();
-		addPriseMsg.data = data;
-		data.uid = this.uid;
-		data.psw = this.psw;
-		data.word = word;
-		data.source = type;
+		//addPriseMsg.reply = false;
+		//addPriseMsg.type = Message.ADD_PRAISE;
+		//Message.Add_Praise data = addPriseMsg.new Add_Praise();
+		//addPriseMsg.data = data;
+		//data.uid = this.uid;
+		//data.psw = this.psw;
+		//data.word = word;
+		//data.source = type;
 		try {
 			synchronized(requestMap){
 				requestMap.put(addPriseMsg.id, null);
@@ -263,14 +262,14 @@ public class LinkToServer {
 	public boolean delPrise(String word, int type){
 		Message delPriseMsg = new Message();
 		delPriseMsg.id = idCreater ++;
-		delPriseMsg.reply = false;
-		delPriseMsg.type = Message.DEL_PRAISE;
-		Message.Del_Praise data = delPriseMsg.new Del_Praise();
-		delPriseMsg.data = data;
-		data.uid = this.uid;
-		data.psw = this.psw;
-		data.word = word;
-		data.source = type;
+		//delPriseMsg.reply = false;
+		//delPriseMsg.type = Message.DEL_PRAISE;
+		//Message.Del_Praise data = delPriseMsg.new Del_Praise();
+		//delPriseMsg.data = data;
+		///data.uid = this.uid;
+		//data.psw = this.psw;
+		//data.word = word;
+		//data.source = type;
 		try {
 			synchronized(requestMap){
 				requestMap.put(delPriseMsg.id, null);
@@ -292,7 +291,7 @@ public class LinkToServer {
 	public boolean addFriend(String friendUid){
 		Message addFriendMsg = new Message();
 		addFriendMsg.id = idCreater ++;
-		addFriendMsg.reply = false;
+		//addFriendMsg.reply = false;
 		addFriendMsg.type = Message.ADD_FRIEND;
 		Message.AddFriend data = addFriendMsg.new AddFriend();
 		addFriendMsg.data = data;
@@ -320,7 +319,7 @@ public class LinkToServer {
 	public boolean delFriend(String friendUid){
 		Message delFriendMsg = new Message();
 		delFriendMsg.id = idCreater ++;
-		delFriendMsg.reply = false;
+		//delFriendMsg.reply = false;
 		delFriendMsg.type = Message.DEL_FRIEND;
 		Message.DelFriend data = delFriendMsg.new DelFriend();
 		delFriendMsg.data = data;
@@ -348,7 +347,7 @@ public class LinkToServer {
 	public boolean sendText(String text, String tuid){
 		Message sendTextMsg = new Message();
 		sendTextMsg.id = idCreater ++;
-		sendTextMsg.reply = false;
+		//sendTextMsg.reply = false;
 		sendTextMsg.type = Message.SEND_MESSAGE;
 		Message.Send_Message data = sendTextMsg.new Send_Message();
 		sendTextMsg.data = data;
@@ -374,17 +373,17 @@ public class LinkToServer {
 		}
 		return false;
 	}
-	public boolean sendCard(BufferedImage image, String tuid){
+	/*public boolean sendCard(BufferedImage image, String tuid){
 		Message cardMsg = new Message();
 		cardMsg.id = idCreater ++;
-		cardMsg.reply = false;
-		cardMsg.type = Message.SEND_CARD;
-		Message.Send_Card data = cardMsg.new Send_Card();
-		cardMsg.data = data;
-		data.uid = this.uid;
-		data.psw = this.psw;
-		data.targetuid = tuid;
-		data.card = Message.imageToBytes(image);
+		//cardMsg.reply = false;
+	//	cardMsg.type = Message.SEND_CARD;
+		//Message.Send_Card data = cardMsg.new Send_Card();
+		//cardMsg.data = data;
+		//data.uid = this.uid;
+	//	data.psw = this.psw;
+	//	data.targetuid = tuid;
+	//	data.card = Message.imageToBytes(image);
 		try {
 			synchronized(requestMap){
 				requestMap.put(cardMsg.id, null);
@@ -407,7 +406,7 @@ public class LinkToServer {
 					Socket cardSocket = new Socket(ip, cardPort);
 					
 					ObjectOutputStream cardStream = new ObjectOutputStream(cardSocket.getOutputStream());
-					data.psw = null;//不能把密码发送出去
+					data.psw = null;//娑撳秷鍏橀幎濠傜槕閻礁褰傞柅浣稿毉閸橈拷
 					cardStream.writeObject(cardMsg);
 					cardStream.flush();
 					cardStream.close();
@@ -423,7 +422,8 @@ public class LinkToServer {
 		}
 		return false;
 	}
-	public ArrayList<UserInfo> getOnlineFriend(){
+	*/
+	/*public ArrayList<UserInfo> getOnlineFriend(){
 		
 		Message onlineMsg = new Message();
 		onlineMsg.id = idCreater ++;
@@ -458,7 +458,8 @@ public class LinkToServer {
 		return null;
 		
 	}
-	public UserInfo getDetail(){
+	*/
+	/*public UserInfo getDetail(){
 		Message userInfoMsg = new Message();
 		userInfoMsg.id = idCreater ++;
 		userInfoMsg.reply = false;
@@ -487,6 +488,7 @@ public class LinkToServer {
 		}
 		return null;
 	}
+	*/
 	private Message waitReply(int id){
 		int loop = 0;//time counter
 		while(true){
@@ -495,9 +497,9 @@ public class LinkToServer {
 				if(reply != null){
 					requestMap.remove(id);
 					return reply;
-				}else if(loop > 160){//4s超时
+				}else if(loop > 160){//4s鐡掑懏妞�
 					System.out.println("time out");
-					requestMap.remove(id);//删除注册请求
+					requestMap.remove(id);//閸掔娀娅庡▔銊ュ斀鐠囬攱鐪�
 					return null;
 				}
 			}

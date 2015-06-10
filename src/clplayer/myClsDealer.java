@@ -66,7 +66,7 @@ public void run() {
 			}
 			if(msg == null)
 				continue;
-			if(msg.reply){// themsg is a reply
+			/*if(msg.reply){// themsg is a reply
 				System.out.println("reply to:"+ msg.id);
 				synchronized(requestMap){
 					if(requestMap.containsKey(msg.id))//鏈夌浉搴旂殑璇锋眰鎵嶄細鍔犲叆锛屽惁鍒欒鏄庤杩斿洖宸茬粡瓒呮椂锛屼涪寮�
@@ -90,7 +90,7 @@ public void run() {
 				synchronized(msgs){
 					msgButton.setText(msgs.size() +" Message");
 				}
-			}
+			}*/
 		
 		}
 	
