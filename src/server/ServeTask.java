@@ -99,10 +99,12 @@ public class ServeTask extends Task implements Runnable{
 			}
 			if(msg == null)
 				continue;
-			if(false){// themsg is a reply
+			/*if(false){// themsg is a reply
 				;
-			}else{//then it is a request 
-				switch(msg.type){
+			}else{
+			*/
+			//then it is a request 
+			switch(msg.type){
 				case Message.LOGIN:login(msg);break;
 				case Message.REGISTER:register(msg);break;
 				case Message.LOGOUT:logout(msg);break;
@@ -125,11 +127,39 @@ public class ServeTask extends Task implements Runnable{
 				case Message.GETALBUM: getAlbum(msg);break;
 				case Message.DEL_PIC:deletePic(msg);break;
 				default:;
-				}
 			}
+			//}
 		
 		}
 	
+	}
+	private void deletePic(Message msg) {
+		// TODO Auto-generated method stub
+		
+	}
+	private void getAlbum(Message msg) {
+		// TODO Auto-generated method stub
+		
+	}
+	private void deleteMsg(Message msg) {
+		// TODO Auto-generated method stub
+		
+	}
+	private void uploadPic(Message msg) {
+		// TODO Auto-generated method stub
+		
+	}
+	private void deleteAlbum(Message msg) {
+		// TODO Auto-generated method stub
+		
+	}
+	private void createAlbum(Message msg) {
+		// TODO Auto-generated method stub
+		
+	}
+	private void addMsg(Message msg) {
+		// TODO Auto-generated method stub
+		
 	}
 	/*private void getOnlineState(Message msg){
 		Message.IsOnline isonline = (Message.IsOnline)(msg.data);
@@ -403,17 +433,17 @@ public class ServeTask extends Task implements Runnable{
 		// TODO Auto-generated method stub
 		Message.RegsiterMsg rMsgData = (Message.RegsiterMsg)(msg.data);
 		Message reply = new Message();
-		reply.id = msg.id;
-		reply.reply = true;
+		//reply.id = msg.id;
+		//reply.reply = true;
 		reply.type = Message.REGISTER;
 		Message.ReplyData redata = reply.new ReplyData();
 		reply.data = redata;
-		UserInfo newusr = new UserInfo(null, rMsgData.uid, rMsgData.psw);
-		newusr.setByteImage(rMsgData.head);
-		newusr.setEmail(rMsgData.email);
-		newusr.setSex(rMsgData.sex);
+		//UserInfo newusr = new UserInfo(null, rMsgData.uid, rMsgData.psw);
+		//newusr.setByteImage(rMsgData.head);
+		//newusr.setEmail(rMsgData.email);
+		//newusr.setSex(rMsgData.sex);
 		//System.out.println("register msg: uid-"+rMsgData.uid+" psw-"+rMsgData.psw+" email-"+rMsgData.email+ " sex-"+rMsgData.sex);
-		if(UserManager.createUser(newusr)){
+		if(UserManager.createUser(rMsgData.uid, rMsgData.psw, rMsgData.email, rMsgData.head)){
 			//user = new User(rMsgData.uid, rMsgData.psw);
 			
 			System.out.println("server register successful");
@@ -427,7 +457,7 @@ public class ServeTask extends Task implements Runnable{
 		}
 		synchronized(msgBox){
 			msgBox.add(reply);
-		}
+		}7
 	}
 	private void login(Message msg) {
 		// TODO Auto-generated method stub
