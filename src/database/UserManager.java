@@ -148,6 +148,9 @@ public class UserManager {
 					+account1+"','"+account2+"');";
 			change = true;
 			statement.execute(sql);
+			sql = "insert into FRIEND(uid1,uid2) values('"
+					+account2+"','"+account1+"');";
+			statement.execute(sql);
 		} catch (SQLException e) {
 			//e.printStackTrace();
 			System.out.println("FriendShip Exists!");
@@ -166,11 +169,11 @@ public class UserManager {
 		try {
 			conn = DataBase.connect();
 			Statement statement = conn.createStatement();
-			String sql = "delete from FriendRelation where username1='"
-					+account1+"' and username2='"+account2+"';";
+			String sql = "delete from FRIEND where uid1='"
+					+account1+"' and uid2='"+account2+"';";
 			change = statement.execute(sql);	
-			sql = "delete from FriendRelation where username1='"
-					+account2+"' and username2='"+account1+"';";
+			sql = "delete from FRIEND where uid='"
+					+account2+"' and uid2='"+account1+"';";
 			change = statement.execute(sql);	
 		} catch (SQLException e) {
 			System.out.println("Not Exists!");
@@ -188,7 +191,7 @@ public class UserManager {
 		try {
 			conn = DataBase.connect();
 			Statement statement = conn.createStatement();
-			String sql = "delete from UserTable where username='"
+			String sql = "delete from USERTABLE where uid='"
 					+ user +"';";
 			change = statement.execute(sql);	
 		} catch (SQLException e) {
@@ -201,7 +204,7 @@ public class UserManager {
 		return true;
 	}
 	
-	public static ArrayList<UserInfo> getUserList(){
+/*	public static ArrayList<UserInfo> getUserList(){
 		Connection conn = null;
 		ArrayList<UserInfo> userList = new ArrayList<UserInfo>();
 		try {
@@ -229,7 +232,7 @@ public class UserManager {
 		}
 		return userList;
 	}
-	
+	*/
 	
 	public static boolean changePassword(String account,String oldPw,String newPw){
 		boolean change = false;
@@ -237,12 +240,12 @@ public class UserManager {
 		try {
 			conn = DataBase.connect();
 			Statement statement = conn.createStatement();
-			String sql = "select username,password from USERTABLE;";
+			String sql = "select uid,pwd from USERTABLE;";
 			ResultSet result = statement.executeQuery(sql);
 			while(result.next()){
-				if(account.equals(result.getString("username"))
-						&&oldPw.equals(result.getString("password"))){
-					change = statement.execute("update user set password = '"+newPw+"' where username = '"+account+"';");
+				if(account.equals(result.getString("uid"))
+						&&oldPw.equals(result.getString("pwd"))){
+					change = statement.execute("update user set pwd = '"+newPw+"' where uid = '"+account+"';");
 					break;
 				}
 			}
@@ -263,11 +266,11 @@ public class UserManager {
 		try {
 			conn = DataBase.connect();
 			Statement statement = conn.createStatement();
-			String sql = "select username,password from USERTABLE;";
+			String sql = "select uid,pwd from USERTABLE;";
 			ResultSet result = statement.executeQuery(sql);
 			while(result.next()){
-				if(account.equals(result.getString("username"))
-						&&Pw.equals(result.getString("password"))){
+				if(account.equals(result.getString("uid"))
+						&&Pw.equals(result.getString("pwd"))){
 					isValid = true;
 					break;
 				}
@@ -288,8 +291,8 @@ public class UserManager {
 		try {
 			conn = DataBase.connect();
 			Statement statement = conn.createStatement();
-			String sql = "select username1,username2 from FriendRelation "
-					+ "where username1 = '"+ account1 +"' and username2 = '"+ account2 +"';";
+			String sql = "select uid1,uid2 from FRIEND "
+					+ "where uid1 = '"+ account1 +"' and uid2 = '"+ account2 +"';";
 //------------------------------------------------------
 			ResultSet result = statement.executeQuery(sql);
 			if(result.next())
@@ -303,31 +306,55 @@ public class UserManager {
 		return isFriend;
 	}
 	
-	public static boolean addOnlineUser(UserInfo user){
+	public static boolean login(String uid){
 		boolean change = false;
-		synchronized(onlineUser){
-		int i;
-		for(i = 0;i < onlineUser.size();i ++)
-			if(onlineUser.get(i).getAccount().equals(user.getAccount()))
-				break;
-		if(i == onlineUser.size())
-			change = onlineUser.add(user);
-		else {
-			change = true;
+		Connection conn = null;
+		try {
+			conn = DataBase.connect();
+			Statement statement = conn.createStatement();
+			String sql = "select uid from USERTABLE;";
+			ResultSet result = statement.executeQuery(sql);
+			while(result.next()){
+				if(uid.equals(result.getString("uid"))){
+					change = statement.execute("update user set online = true where uid = '"+uid+"';");
+					break;
+				}
+			}
+		} catch (SQLException e) {
+			System.out.println("add online Failed!");
+			return false;
 		}
+		finally{
+			DataBase.close(conn);
 		}
-		return change;
+		return true;
 	}
 	
-	public static boolean delOnlineUser(UserInfo user){
+	public static boolean logout(String uid){
 		boolean change = false;
-		synchronized(onlineUser){
-		change = onlineUser.remove(user);
+		Connection conn = null;
+		try {
+			conn = DataBase.connect();
+			Statement statement = conn.createStatement();
+			String sql = "select uid from USERTABLE;";
+			ResultSet result = statement.executeQuery(sql);
+			while(result.next()){
+				if(uid.equals(result.getString("uid"))){
+					change = statement.execute("update user set online = false where uid = '"+uid+"';");
+					break;
+				}
+			}
+		} catch (SQLException e) {
+			System.out.println("logout Failed!");
+			return false;
 		}
-		return change;
+		finally{
+			DataBase.close(conn);
+		}
+		return true;
 	}
 	
-	public static ArrayList<UserInfo> getOnlineUser(){
+	/*public static ArrayList<UserInfo> getOnlineUser(){
 		ArrayList<UserInfo> out = new ArrayList<UserInfo>(onlineUser); 
 		return out;
 	}
@@ -362,8 +389,8 @@ public class UserManager {
 		}
 		return null;
 	}
-	
-	public static UserInfo getOtherOnlineUser(String uid){
+	*/
+/*	public static UserInfo getOtherOnlineUser(String uid){
 		UserInfo usrinfoInfo = null;
 		for(int i = 0; i < onlineUser.size(); i ++)
 			if(onlineUser.get(i).getAccount().equals(uid))
@@ -372,7 +399,7 @@ public class UserManager {
 				break;
 			}
 		return usrinfoInfo;
-	}
+	}*/
 	
 	public static boolean saveUserImage(String user,byte[] img){
 		boolean change = false;
@@ -392,7 +419,7 @@ public class UserManager {
 		return true;
 	}
 	
-	public static void main(String[] args){
+	/*public static void main(String[] args){
 		User usr = new User("zhangry","123456");
 		User usr2 = new User("Jam","123456");
 		User usr3 = new User("Haohao","123456");
@@ -403,5 +430,5 @@ public class UserManager {
 		usr.delFriend("Jam");
 		//UserInfo usrinfo = UserManager.getOtherOnlineUser("zhangry");
 		//usrinfo.display();
-	}
+	}*/
 }
