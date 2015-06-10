@@ -16,6 +16,7 @@ import javax.imageio.ImageIO;
 //说明:凡是需要返回boolen 型的消息都使用Replydata
 
 public class Message implements Serializable{
+	public int id;
 	public int type;
 	public static final int LOGIN = 1;
 	public static final int LOGOUT = 2;
