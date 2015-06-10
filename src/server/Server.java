@@ -12,10 +12,10 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 
-import DataBase.DictionaryManager;
-import DataBase.User;
-import DataBase.UserManager;
-import net.Message.*;
+//import DataBase.DictionaryManager;
+//import DataBase.User;
+import database.UserManager;
+import inter.*;
 
 
 public class Server {
@@ -32,12 +32,12 @@ public class Server {
 		//dictm = new DictionaryManager();
 		ServeTask.setMsgMap(msgMap);
 		//ServeTask.setUserManager(uManager);
-		ServeTask.setDictionaryManager(dictm);
+		//ServeTask.setDictionaryManager(dictm);
 		//读取配置
 		BufferedInputStream bis;
 		try {
 			bis = new BufferedInputStream(
-					new FileInputStream("Sever\\server.conf.properties"));
+					new FileInputStream("./server.conf.properties"));
 			Properties properties = new Properties();
 			properties.load(bis);
 			port = Integer.valueOf(properties.getProperty("server_port", "8888"));
@@ -93,7 +93,7 @@ public class Server {
 		return msgMap;
 	}
 	
-	public void test(){
+	/*public void test(){
 		User u1 = new User("jam", "guoruijun");
 		User u2 = new User("hlz", "hlz");
 		u1.login("u1 ip", 1);
@@ -110,7 +110,7 @@ public class Server {
 		for(UserInfo u:u2f){
 			System.out.println(u.getAccount());
 		}
-	}
+	}*/
 }
 
 
