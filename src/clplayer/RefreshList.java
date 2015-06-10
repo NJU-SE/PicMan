@@ -6,7 +6,8 @@ import java.util.List;
 import javax.swing.DefaultListModel;
 import javax.swing.JList;
 
-import inter.Message;
+import System.UserInfo;
+import word.Word;
 
 public class RefreshList implements Runnable {
 
@@ -24,7 +25,7 @@ public class RefreshList implements Runnable {
 			dlist.removeAllElements();
 			
 			System.out.println("try to refresh list $$$$$$$$$$$$$$$$$$$");
-				//鎵惧埌浜嗘柊鐨勫崟璇嶅垪琛�,閭ｄ箞鏇存柊list涓殑鍗曡瘝
+				//找到了新的单词列表,那么更新list中的单词
 			if(link.isOnline()){
 				ArrayList<UserInfo> online = link.getOnlineFriend();
 				if(online != null){
@@ -41,7 +42,7 @@ public class RefreshList implements Runnable {
 			}
 	
 			try {
-				list.setModel(dlist);//鏇存柊鍒楄〃涓殑鍏冪礌
+				list.setModel(dlist);//更新列表中的元素
 				list.repaint();
 				Thread.sleep(3000);
 			} catch (InterruptedException e) {

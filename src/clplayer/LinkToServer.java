@@ -11,7 +11,9 @@ import java.util.Map;
 
 import javax.swing.JOptionPane;
 
-import inter.Message;
+import net.Message.Message;
+import System.UserInfo;
+import word.UnionWord;
 
 public class LinkToServer {
 	private static String ip = "localhost";
@@ -405,7 +407,7 @@ public class LinkToServer {
 					Socket cardSocket = new Socket(ip, cardPort);
 					
 					ObjectOutputStream cardStream = new ObjectOutputStream(cardSocket.getOutputStream());
-					data.psw = null;//涓嶈兘鎶婂瘑鐮佸彂閫佸嚭鍘�
+					data.psw = null;//不能把密码发送出去
 					cardStream.writeObject(cardMsg);
 					cardStream.flush();
 					cardStream.close();
@@ -493,9 +495,9 @@ public class LinkToServer {
 				if(reply != null){
 					requestMap.remove(id);
 					return reply;
-				}else if(loop > 160){//4s瓒呮椂
+				}else if(loop > 160){//4s超时
 					System.out.println("time out");
-					requestMap.remove(id);//鍒犻櫎娉ㄥ唽璇锋眰
+					requestMap.remove(id);//删除注册请求
 					return null;
 				}
 			}
