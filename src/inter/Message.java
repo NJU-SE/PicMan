@@ -41,7 +41,7 @@ public class Message implements Serializable{
 	
 	//需要商讨
 	public static final int DEL_MSG = 22;//删除自己的评论,需要指定相册path,图片name和评论id.
-	
+	public static final int REPLY = 23;
 	public MsgData data;
 	
 

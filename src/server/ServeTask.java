@@ -99,33 +99,39 @@ public class ServeTask extends Task implements Runnable{
 			}
 			if(msg == null)
 				continue;
-			if(msg.reply){// themsg is a reply
-				
+			if(false){// themsg is a reply
+				;
 			}else{//then it is a request 
 				switch(msg.type){
 				case Message.LOGIN:login(msg);break;
 				case Message.REGISTER:register(msg);break;
 				case Message.LOGOUT:logout(msg);break;
 				case Message.CHANGE_PSW:changePsw(msg);break;
-				case Message.SEARCH:search(msg);break;
+				//case Message.SEARCH:search(msg);break;
 				case Message.SEND_MESSAGE:sendMsg(msg);break;
-				case Message.SEND_CARD:sendCard(msg);break;
+				//case Message.SEND_CARD:sendCard(msg);break;
 				case Message.ADD_FRIEND:addFriend(msg);break;
-				case Message.ADD_PRAISE:addPrise(msg);break;
+				//case Message.ADD_PRAISE:addPrise(msg);break;
 				case Message.DEL_FRIEND:delFriend(msg);break;
-				case Message.DEL_PRAISE:delPrise(msg);break;
+				//case Message.DEL_PRAISE:delPrise(msg);break;
 				case Message.UPDATE_FRIEND_ONLINE:updateOnlineFriend(msg);break;
-				case Message.USER_INFO:getUserInfo(msg);break;
-				case Message.IS_ONLINE:getOnlineState(msg);break;
+				//case Message.USER_INFO:getUserInfo(msg);break;
+				//case Message.IS_ONLINE:getOnlineState(msg);break;
+				case Message.ADD_MSG: addMsg(msg);break;
+				case Message.CRE_ALBUM: createAlbum(msg);break;
+				case Message.DEL_ALBUM: deleteAlbum(msg);break;
+				case Message.DEL_MSG: deleteMsg(msg);break;
+				case Message.UPLOAD_PIC: uploadPic(msg);break;
+				case Message.GETALBUM: getAlbum(msg);break;
+				case Message.DEL_PIC:deletePic(msg);break;
 				default:;
 				}
-				
 			}
 		
 		}
 	
 	}
-	private void getOnlineState(Message msg){
+	/*private void getOnlineState(Message msg){
 		Message.IsOnline isonline = (Message.IsOnline)(msg.data);
 		msg.reply = true;
 		msg.type = Message.IS_ONLINE;
@@ -138,8 +144,8 @@ public class ServeTask extends Task implements Runnable{
 		}
 		msgBox.add(msg);
 	}
-	
-	private void getUserInfo(Message msg){
+	*/
+	/*private void getUserInfo(Message msg){
 		Message.Info uinfo = (Message.Info)(msg.data);
 		msg.reply = true;
 		msg.type = Message.USER_INFO;
@@ -152,7 +158,7 @@ public class ServeTask extends Task implements Runnable{
 		synchronized(msgBox){
 			msgBox.add(msg);
 		}
-	}
+	}*/
 	private void updateOnlineFriend(Message msg) {
 		// TODO Auto-generated method stub
 		Message.OnlineFriend onlineFriend = (Message.OnlineFriend)(msg.data);
@@ -175,7 +181,7 @@ public class ServeTask extends Task implements Runnable{
 			msgBox.add(msg);
 		}
 	}
-	private void delPrise(Message msg) {
+	/*private void delPrise(Message msg) {
 		// TODO Auto-generated method stub
 		Message.Del_Praise delPrise = (Message.Del_Praise)(msg.data);
 		Message reply = new Message();
@@ -193,6 +199,7 @@ public class ServeTask extends Task implements Runnable{
 			msgBox.add(reply);
 		}
 	}
+	
 	private void addPrise(Message msg) {
 		// TODO Auto-generated method stub
 		Message.Add_Praise addPrise = (Message.Add_Praise)(msg.data);
@@ -211,6 +218,7 @@ public class ServeTask extends Task implements Runnable{
 			msgBox.add(reply);
 		}
 	}
+	*/
 	private void delFriend(Message msg) {
 		// TODO Auto-generated method stub
 		Message.DelFriend delFriend = (Message.DelFriend)(msg.data);
