@@ -43,7 +43,7 @@ public class MainUI extends javax.swing.JFrame {
     JTextArea IntroduceTextArea = new JTextArea();                //同上，介绍软件作者的文本域，被加在了面板上
     JPopupMenu PopupMenu = new JPopupMenu();                      //右键单击文件时弹出的弹出式菜单
     JMenuItem Copy = new JMenuItem(" 复制 ");                    // 菜单中的复制选项
-    JMenuItem Delete = new JMenuItem(" 删除 ");              // 菜单中的删除选项
+    JMenuItem Delete = new JMenuItem(" 删除 ");              // 菜单中的删除选项 
     JMenuItem Cut = new JMenuItem(" 剪切 ");                  //菜单中的剪切选项
     JMenuItem Rename = new JMenuItem(" 重命名 ");                  //菜单中的重命名选项
     JPanel ImagePanel = new JPanel();
@@ -102,6 +102,9 @@ public class MainUI extends javax.swing.JFrame {
             }
 
             public void popupMenuWillBecomeInvisible(PopupMenuEvent e) {
+            	if(jComboBox1.getSelectedIndex() == -1)
+            		return;
+            	
                 jTree1.setSelectionPath(TreePaths.get(jComboBox1.getSelectedIndex()));
                 ShowImages(E, TreePaths.get(jComboBox1.getSelectedIndex()), 1);
             }
@@ -1005,11 +1008,15 @@ public class MainUI extends javax.swing.JFrame {
         jButton3 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
+        jButton6 = new javax.swing.JButton();
+        
         jScrollPane1 = new javax.swing.JScrollPane();
         jTree1 = new javax.swing.JTree();
         jComboBox1 = new javax.swing.JComboBox();
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jComboBox2 = new javax.swing.JComboBox();
+        jComboBox3 = new javax.swing.JComboBox();
+        
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
@@ -1058,7 +1065,6 @@ public class MainUI extends javax.swing.JFrame {
             }
         });
         jToolBar1.add(jButton3);
-
         jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Picture/refresh.jpg"))); // NOI18N
         jButton4.setText("刷新");
         jButton4.setFocusable(false);
@@ -1071,8 +1077,8 @@ public class MainUI extends javax.swing.JFrame {
         });
         jToolBar1.add(jButton4);
 
-        jButton5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Picture/delete.jpg"))); // NOI18N
-        jButton5.setText("删除");
+        jButton5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Picture/login.jpg"))); // NOI18N
+        jButton5.setText("登录");
         jButton5.setFocusable(false);
         jButton5.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButton5.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
@@ -1083,13 +1089,33 @@ public class MainUI extends javax.swing.JFrame {
         });
         jToolBar1.add(jButton5);
 
+        jButton6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Picture/reg.jpg"))); // NOI18N
+        jButton6.setText("注册");
+        jButton6.setFocusable(false);
+        jButton6.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButton6.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jButton6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton6ActionPerformed(evt);
+            }
+        });
+        jToolBar1.add(jButton6);
+        
+        jToolBar1.add(jComboBox3);
+        
+        
         jScrollPane1.setViewportView(jTree1);
         RunTree(jTree1);
 
         jComboBox1.setPreferredSize(new java.awt.Dimension(62, 14));
 
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "请选择文件夹外观", " ", " ", " " }));
+        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "本地目录", "网络目录" }));
+        
+        jComboBox3.setPreferredSize(new java.awt.Dimension(30,30));
 
+        // jComboBox3.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "嗨嗨", "哟哟" }));
+        
+        
         jMenuBar1.setMaximumSize(new java.awt.Dimension(1000, 32769));
 
         jMenu1.setText("文件");
@@ -1203,7 +1229,12 @@ public class MainUI extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-        Delete();
+        //TODO: 调用登录方法
+    	Delete();
+    }//GEN-LAST:event_jButton5ActionPerformed
+    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        //TODO: 调用注册方法
+    	Delete();
     }//GEN-LAST:event_jButton5ActionPerformed
 
     public static void main(String args[]) {
@@ -1229,8 +1260,10 @@ public class MainUI extends javax.swing.JFrame {
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
+    private javax.swing.JButton jButton6;
     private javax.swing.JComboBox jComboBox1;
     private javax.swing.JComboBox jComboBox2;
+    private javax.swing.JComboBox jComboBox3;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
