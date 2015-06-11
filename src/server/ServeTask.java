@@ -465,14 +465,14 @@ public class ServeTask extends Task implements Runnable{
 		
 		//
 		
-		user = new User(((Message.LoginMsg)(msg.data)).uid, ((Message.LoginMsg)(msg.data)).psw);
+	//	user = new User(((Message.LoginMsg)(msg.data)).uid, ((Message.LoginMsg)(msg.data)).psw);
 		Message replyMsg = new Message();
 		replyMsg.id = msg.id;
-		replyMsg.reply = true;
+		//replyMsg.reply = true;
 		replyMsg.type = Message.LOGIN;
 		Message.ReplyData data = replyMsg.new ReplyData();
 		replyMsg.data = data;
-		boolean login = user.login(userSocket.getInetAddress().getHostAddress(), userSocket.getPort());
+		boolean login = UserManager.login(((Message.LoginMsg)(msg.data)).uid, ((Message.LoginMsg)(msg.data)).psw);
 		if(login){//login successful
 			synchronized(msgMap){
 				msgMap.put(user.getAccount(), msgBox);

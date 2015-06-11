@@ -306,19 +306,18 @@ public class UserManager {
 		return isFriend;
 	}
 	
-	public static boolean login(String uid){
+	public static boolean login(String uid, String pwd){
+		//TODO
 		boolean change = false;
 		Connection conn = null;
 		try {
 			conn = DataBase.connect();
 			Statement statement = conn.createStatement();
-			String sql = "select uid from USERTABLE;";
+			String sql = "select uid from USERTABLE where uid = '"+uid+"' and pwd = '"+pwd+"';";
 			ResultSet result = statement.executeQuery(sql);
-			while(result.next()){
-				if(uid.equals(result.getString("uid"))){
+			if(result.next()){
 					change = statement.execute("update user set online = true where uid = '"+uid+"';");
-					break;
-				}
+					change = true;
 			}
 		} catch (SQLException e) {
 			System.out.println("add online Failed!");
@@ -327,7 +326,7 @@ public class UserManager {
 		finally{
 			DataBase.close(conn);
 		}
-		return true;
+		return change;
 	}
 	
 	public static boolean logout(String uid){
