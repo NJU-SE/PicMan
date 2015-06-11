@@ -1,6 +1,8 @@
 package server;
 
 import inter.Message;
+import inter.Message.UPDATE_FriendList;
+import inter.Message.*;
 
 import java.awt.image.BufferedImage;
 import java.io.BufferedInputStream;
@@ -31,7 +33,8 @@ public class ServeTask extends Task implements Runnable{
 	private Socket userSocket;
 	private ObjectInputStream fromClient;
 	private ArrayList<Message> msgBox;
-	private User user = null;
+	//private User user = null;
+	private String uid = null;
 	static private Map msgMap;//share with all the server
 	//static private UserManager uManager;//share with all the server
 	//static private DictionaryManager dictManager;
@@ -129,6 +132,7 @@ public class ServeTask extends Task implements Runnable{
 				default:;
 			}
 			//}
+			
 		
 		}
 	
@@ -192,8 +196,10 @@ public class ServeTask extends Task implements Runnable{
 	private void updateOnlineFriend(Message msg) {
 		// TODO Auto-generated method stub
 		Message.OnlineFriend onlineFriend = (Message.OnlineFriend)(msg.data);
-		msg.reply = true;
-		if(user == null || !user.isOn() || !UserManager.identityVerify(onlineFriend.uid, onlineFriend.psw)){
+		Message.UPDATE_FriendList uf = msg.new UPDATE_FriendList();
+		
+		//msg.reply = true;
+	/*	if(user == null || !user.isOn() || !UserManager.identityVerify(onlineFriend.uid, onlineFriend.psw)){
 
 			onlineFriend.friendList = null;
 			System.out.println("cant get friend list");
@@ -210,6 +216,7 @@ public class ServeTask extends Task implements Runnable{
 		synchronized(msgBox){
 			msgBox.add(msg);
 		}
+		*/
 	}
 	/*private void delPrise(Message msg) {
 		// TODO Auto-generated method stub
@@ -254,7 +261,7 @@ public class ServeTask extends Task implements Runnable{
 		Message.DelFriend delFriend = (Message.DelFriend)(msg.data);
 		Message reply = new Message();
 		reply.id = msg.id;
-		reply.reply = true;
+		//reply.reply = true;
 		reply.type = Message.DEL_FRIEND;
 		Message.ReplyData data = reply.new ReplyData();
 		
@@ -273,7 +280,7 @@ public class ServeTask extends Task implements Runnable{
 		Message.AddFriend addFriend = (Message.AddFriend)(msg.data);
 		Message reply = new Message();
 		reply.id = msg.id;
-		reply.reply = true;
+		//reply.reply = true;
 		reply.type = Message.ADD_FRIEND;
 		Message.ReplyData data = reply.new ReplyData();
 		
@@ -443,7 +450,7 @@ public class ServeTask extends Task implements Runnable{
 		//newusr.setEmail(rMsgData.email);
 		//newusr.setSex(rMsgData.sex);
 		//System.out.println("register msg: uid-"+rMsgData.uid+" psw-"+rMsgData.psw+" email-"+rMsgData.email+ " sex-"+rMsgData.sex);
-		if(UserManager.createUser(rMsgData.uid, rMsgData.psw, rMsgData.email, rMsgData.head)){
+		if(UserManager.createUser(rMsgData.uid, rMsgData.psw, rMsgData.head, rMsgData.email)){
 			//user = new User(rMsgData.uid, rMsgData.psw);
 			
 			System.out.println("server register successful");
@@ -457,8 +464,9 @@ public class ServeTask extends Task implements Runnable{
 		}
 		synchronized(msgBox){
 			msgBox.add(reply);
-		}7
+		}
 	}
+	//login doen~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~PicMan
 	private void login(Message msg) {
 		// TODO Auto-generated method stub
 		// user info
@@ -472,12 +480,14 @@ public class ServeTask extends Task implements Runnable{
 		replyMsg.type = Message.LOGIN;
 		Message.ReplyData data = replyMsg.new ReplyData();
 		replyMsg.data = data;
+		this.uid = new String(((Message.LoginMsg)(msg.data)).uid);//登录时记录uid,如果uid=null责说明未未登录
+		//将登录状态同步到数据库
 		boolean login = UserManager.login(((Message.LoginMsg)(msg.data)).uid, ((Message.LoginMsg)(msg.data)).psw);
 		if(login){//login successful
 			synchronized(msgMap){
-				msgMap.put(user.getAccount(), msgBox);
+				msgMap.put(uid, msgBox);
 			}
-			user.getFriendOnline();
+			//user.getFriendOnline();
 			data.success = true;
 			
 		}else{// login faild

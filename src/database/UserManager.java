@@ -49,6 +49,9 @@ public class UserManager {
 	public static boolean createUser(String account,String Pw,String email){
 		boolean change = false;
 		Connection conn = null;
+		//email is null or empty then just use the method exsit;
+		if(email == null || email.length() == 0)
+			return createUser(account, Pw);
 		try {
 			conn = DataBase.connect();
 			Statement statement = conn.createStatement();
@@ -69,6 +72,8 @@ public class UserManager {
 
 	public static boolean createUser(String account,String Pw, byte[] head, String email){
 		boolean change = false;
+		if(head == null || head.length == 0)
+			return createUser(account, Pw, email);
 		try {
 			PreparedStatement statement;
 			Connection conn = DataBase.connect();
@@ -91,6 +96,8 @@ public class UserManager {
 	
 	public static boolean createUser(String account,String Pw, byte[] head){
 		boolean change = false;
+		if(head == null || head.length == 0)
+			return createUser(account, Pw);
 		try {
 			PreparedStatement statement;
 			Connection conn = DataBase.connect();
