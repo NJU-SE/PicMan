@@ -16,7 +16,7 @@ import java.util.Properties;
 import javax.swing.JButton;
 import javax.swing.JList;
 
-import clplayer.myClsDealer;
+import clplayer.serveServer;
 import clplayer.serveUI;
 import clplayer.serveUI;
 import inter.Message;
@@ -72,7 +72,7 @@ public class Client {
 		}
 		serveUI link = new serveUI(requests, socket);
 		
-		myClsDealer msgs = new myClsDealer(requests, socket, msgButton, msgList, msgBox);
+		serveServer msgs = new serveServer(requests, socket, msgButton, msgList, msgBox);
 		
 	
 		//RefreshList refresh = new RefreshList(link, list);

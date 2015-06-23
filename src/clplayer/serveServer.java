@@ -13,14 +13,14 @@ import javax.swing.JList;
 
 import inter.Message;
 
-public class myClsDealer implements Runnable{
+public class serveServer implements Runnable{
 	private static Map requestMap;
 	private Socket socket;
 	private ObjectInputStream objIn;
 	private JButton msgButton;
 	private JList msgList;
 	private ArrayList<Message> msgs;
-	public myClsDealer(Map requestMap, final Socket socket, JButton msgButton, JList msgList, ArrayList msgs){
+	public serveServer(Map requestMap, final Socket socket, JButton msgButton, JList msgList, ArrayList msgs){
 		System.out.println("ctrating listen msg~~");
 		this.requestMap = requestMap;
 		this.socket = socket;
@@ -31,7 +31,7 @@ public class myClsDealer implements Runnable{
 	}
 	@Override
 public void run() {
-
+		
 		
 		while(true){
 			Message msg = null;

@@ -20,8 +20,14 @@ import inter.Message;
 
 public class clientInterface {
 	public static serveUI getLinkMy(){
+		//Map requestMap, String uid, String psw,final Socket socket
+		Map requestMap = new HashMap<Integer,Message>();
+		String uid = null;
+		String psw = null;
+		Socket socket = null;
 		
-		return null;
+		serveUI returnOb = new serveUI(requestMap,uid,psw,socket);
+		return returnOb;
 		
 	}
 	public static serveUI getLink(JList list, JButton msgButton, JList msgList, ArrayList<Message> msgBox){
@@ -30,8 +36,7 @@ public class clientInterface {
 		int server_port = 8888;
 		int card_port = 8005;
 		try {
-			bis = new BufferedInputStream(
-					new FileInputStream("./client.conf.properties"));
+			bis = new BufferedInputStream(new FileInputStream("./client.conf.properties"));
 			Properties properties = new Properties();
 			properties.load(bis);
 			
@@ -74,7 +79,7 @@ public class clientInterface {
 		}
 		serveUI link = new serveUI(requests, socket);
 		
-		myClsDealer msgs = new myClsDealer(requests, socket, msgButton, msgList, msgBox);
+		serveServer msgs = new serveServer(requests, socket, msgButton, msgList, msgBox);
 		
 	
 		//RefreshList refresh = new RefreshList(link, list);
