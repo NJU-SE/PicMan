@@ -10,6 +10,7 @@ import java.awt.event.ActionEvent;
 import javax.swing.*;
 
 import java.awt.Dimension;
+import java.awt.Frame;
 import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.Point;
@@ -70,6 +71,13 @@ public class MainUI extends javax.swing.JFrame {
     JButton regCancel = new JButton("取消");
     
     
+    
+    /*--好友界面--*/ 
+    JFrame friendFrame  = new FriendsFrame();
+    /*--邮件界面--*/
+    JFrame mailFrame = new MailFrame();
+    
+    
     /*------------------------------------------*/
     JTextArea IntroduceTextArea = new JTextArea();                //同上，介绍软件作者的文本域，被加在了面板上
     JPopupMenu PopupMenu = new JPopupMenu();                      //右键单击文件时弹出的弹出式菜单
@@ -111,6 +119,11 @@ public class MainUI extends javax.swing.JFrame {
     	initComponents();
     }
 
+    
+    
+    
+    
+    
     /*初始化介绍软件作者的面板和文本域 */
     public void InitIntroduction() {
         IntroduceFrame.setVisible(false);
@@ -159,6 +172,8 @@ public class MainUI extends javax.swing.JFrame {
         InitIntroduction();
         InitRegFrame();
         InitLoginFrame();
+        
+        
         
         BigScrollPane = new JScrollPane(ImagePanel);         //滚动面板里加上显示用于显示图像的大面板
         ImagePanel.setLayout(null);                             //图像面板的布局设为null（这点非常重要）
@@ -1438,11 +1453,12 @@ public class MainUI extends javax.swing.JFrame {
 
     private void msgButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         //TODO: 信箱
-
+    	mailFrame.setVisible(true);
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void friendButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         //TODO: 弹出好友列表面板
+    	friendFrame.setVisible(true);
 
     }//GEN-LAST:event_jButton5ActionPerformed
 
